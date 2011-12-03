@@ -81,6 +81,7 @@
 
     <modules>
         <module>arcbees-facebook</module>
+        <module>arcbees-core</module>
     </modules>
 
     <properties>
