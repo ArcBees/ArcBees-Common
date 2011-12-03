@@ -1,3 +1,4 @@
 *.iml
 .idea*
 arcbees-facebook/target*
+arcbees-core/target*
