@@ -11,6 +11,31 @@
     <name>ArcBees</name>
     <inceptionYear>2011</inceptionYear>
     <description>Ruby on rails for Gwt.</description>
+    <url>https://github.com/ArcBees/ArcBees-Infrastructure</url>
+
+    <properties>
+        <target.jdk>1.6</target.jdk>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
+        <maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
+        <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
+        <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+
+        <aopalliance.version>1.0</aopalliance.version>
+        <gae.version>1.6.0</gae.version>
+        <gin.version>1.5.0</gin.version>
+        <guice.version>3.0</guice.version>
+        <gwt.version>2.4.0</gwt.version>
+        <gwtp.version>0.7-SNAPSHOT</gwtp.version>
+        <javax.inject.version>1</javax.inject.version>
+        <jukito.version>1.1</jukito.version>
+        <junit.version>4.9</junit.version>
+        <mockito.version>1.8.5</mockito.version>
+    </properties>
 
     <licenses>
         <license>
@@ -70,13 +95,13 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>http://code.google.com/p/gwt-platform/issues</url>
+        <url>https://github.com/ArcBees/ArcBees-Infrastructure/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:hg:http://gwt-platform.googlecode.com/hg/</connection>
-        <developerConnection>scm:hg:https://gwt-platform.googlecode.com/hg/</developerConnection>
-        <url>http://code.google.com/p/gwt-platform/source/browse/</url>
+        <connection>scm:git:git@github.com:ArcBees/ArcBees-Infrastructure.git</connection>
+        <developerConnection>scm:git:git@github.com:ArcBees/ArcBees-Infrastructure.git</developerConnection>
+        <url>git@github.com:ArcBees/ArcBees-Infrastructure.git</url>
     </scm>
 
     <modules>
@@ -84,29 +109,14 @@
         <module>arcbees-core</module>
     </modules>
 
-    <properties>
-        <target.jdk>1.6</target.jdk>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
-        <maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
-        <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
-        <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
-
-        <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.6.0</gae.version>
-        <gin.version>1.5.0</gin.version>
-        <guice.version>3.0</guice.version>
-        <gwt.version>2.4.0</gwt.version>
-        <gwtp.version>0.7-SNAPSHOT</gwtp.version>
-        <javax.inject.version>1</javax.inject.version>
-        <jukito.version>1.1</jukito.version>
-        <junit.version>4.9</junit.version>
-        <mockito.version>1.8.5</mockito.version>
-    </properties>
+    <distributionManagement>
+        <!-- use the following if you ARE using a snapshot version. -->
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <repositories>
         <repository>
@@ -316,10 +326,6 @@
             <version>${gin.version}</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Persistence dependencies -->
-
-        <!-- Other dependencies -->
 
         <!-- Test dependencies -->
         <dependency>

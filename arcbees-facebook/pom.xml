@@ -13,5 +13,6 @@
     <groupId>com.arcbees.facebook</groupId>
     <artifactId>arcbees-facebook</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
 </project>
