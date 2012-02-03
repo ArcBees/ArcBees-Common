@@ -26,15 +26,16 @@
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 
         <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.6.0</gae.version>
+        <gae.version>1.6.1</gae.version>
         <gin.version>1.5.0</gin.version>
         <guice.version>3.0</guice.version>
         <gwt.version>2.4.0</gwt.version>
-        <gwtp.version>0.7-SNAPSHOT</gwtp.version>
-        <javax.inject.version>1</javax.inject.version>
+        <gwtp.version>0.8-SNAPSHOT</gwtp.version>
+        <javax.version>1.0</javax.version>
         <jukito.version>1.1</jukito.version>
         <junit.version>4.9</junit.version>
-        <mockito.version>1.8.5</mockito.version>
+        <mockito.version>1.9.0</mockito.version>
+        <restlet.version>2.1-SNAPSHOT</restlet.version>
     </properties>
 
     <licenses>
@@ -107,6 +108,7 @@
     <modules>
         <module>arcbees-facebook</module>
         <module>arcbees-core</module>
+        <module>arcbees-guicyRestlet</module>
     </modules>
 
     <distributionManagement>
@@ -128,6 +130,125 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <dependencies>
+        <!-- Google Web Toolkit dependencies -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Google Web Toolkit dependencies -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${gae.version}</version>
+        </dependency>
+
+        <!-- GWT-Platform dependencies -->
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-mvp-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-server-guice</artifactId>
+            <version>${gwtp.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-shared</artifactId>
+            <version>${gwtp.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-processors</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- DI dependencies -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-assistedinject</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.gwt.inject</groupId>
+            <artifactId>gin</artifactId>
+            <version>${gin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId>
+            <version>${jukito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Javax -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${javax.version}</version>
+        </dependency>
+
+        <!-- Restlet -->
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.servlet</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -251,104 +372,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>${gwt.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${gae.version}</version>
-        </dependency>
-
-        <!-- GWT-Platform dependencies -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-mvp-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-server-guice</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-shared</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-processors</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- DI dependencies -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt.inject</groupId>
-            <artifactId>gin</artifactId>
-            <version>${gin.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jukito</groupId>
-            <artifactId>jukito</artifactId>
-            <version>${jukito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
 </project>
