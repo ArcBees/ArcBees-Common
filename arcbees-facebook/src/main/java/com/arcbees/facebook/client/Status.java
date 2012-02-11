@@ -21,32 +21,32 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 
 public enum Status {
-  Connected("connected"), NotConnected("notConnected"), Unknown("unknown");
+    Connected("connected"), NotConnected("notConnected"), Unknown("unknown");
 
-  private static final String JSON_STATUS = "status";
+    private static final String JSON_STATUS = "status";
 
-  private final String statusName;
+    private final String statusName;
 
-  private Status(String statusName) {
-    this.statusName = statusName;
-  }
-
-  @Override
-  public String toString() {
-    return statusName;
-  }
-
-  public static Status valueOf(JavaScriptObject jsObject) {
-    JSONObject json = new JSONObject(jsObject);
-
-    JSONString returnedStatus = json.get(JSON_STATUS).isString();
-
-    for (Status status : Status.values()) {
-      if (status.toString().equals(returnedStatus.stringValue())) {
-        return status;
-      }
+    private Status(String statusName) {
+        this.statusName = statusName;
     }
 
-    return Status.Unknown;
-  }
+    @Override
+    public String toString() {
+        return statusName;
+    }
+
+    public static Status valueOf(JavaScriptObject jsObject) {
+        JSONObject json = new JSONObject(jsObject);
+
+        JSONString returnedStatus = json.get(JSON_STATUS).isString();
+
+        for (Status status : Status.values()) {
+            if (status.toString().equals(returnedStatus.stringValue())) {
+                return status;
+            }
+        }
+
+        return Status.Unknown;
+    }
 }

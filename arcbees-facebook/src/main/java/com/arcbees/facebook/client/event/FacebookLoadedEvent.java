@@ -21,27 +21,27 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class FacebookLoadedEvent extends GwtEvent<FacebookLoadedEvent.FacebookLoadedHandler> {
-  public static Type<FacebookLoadedHandler> TYPE = new Type<FacebookLoadedHandler>();
+    public static Type<FacebookLoadedHandler> TYPE = new Type<FacebookLoadedHandler>();
 
-  public interface FacebookLoadedHandler extends EventHandler {
-    void onFacebookLoaded(FacebookLoadedEvent event);
-  }
+    public interface FacebookLoadedHandler extends EventHandler {
+        void onFacebookLoaded(FacebookLoadedEvent event);
+    }
 
-  @Override
-  protected void dispatch(FacebookLoadedHandler handler) {
-    handler.onFacebookLoaded(this);
-  }
+    @Override
+    protected void dispatch(FacebookLoadedHandler handler) {
+        handler.onFacebookLoaded(this);
+    }
 
-  @Override
-  public Type<FacebookLoadedHandler> getAssociatedType() {
-    return TYPE;
-  }
+    @Override
+    public Type<FacebookLoadedHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-  public static Type<FacebookLoadedHandler> getType() {
-    return TYPE;
-  }
+    public static Type<FacebookLoadedHandler> getType() {
+        return TYPE;
+    }
 
-  public static void fire(HasHandlers source) {
-    source.fireEvent(new FacebookLoadedEvent());
-  }
+    public static void fire(HasHandlers source) {
+        source.fireEvent(new FacebookLoadedEvent());
+    }
 }

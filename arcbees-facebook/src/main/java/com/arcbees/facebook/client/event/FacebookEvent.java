@@ -20,29 +20,25 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class FacebookEvent {
-  public native void subscribe(String event, AsyncCallback<JavaScriptObject> callback) /*-{
-    var instance = this;
+    public native void subscribe(String event, AsyncCallback<JavaScriptObject> callback) /*-{
+        var instance = this;
 
-    $wnd.FB.Event
-        .subscribe(
-            event,
-            function(response) {
-              instance.@com.arcbees.facebook.client.event.FacebookEvent::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Lcom/google/gwt/core/client/JavaScriptObject;)(callback, response);
-            });
-  }-*/;
+        $wnd.FB.Event.subscribe(
+                event, function (response) {
+                    instance.@com.arcbees.facebook.client.event.FacebookEvent::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Lcom/google/gwt/core/client/JavaScriptObject;)(callback, response);
+                });
+    }-*/;
 
-  public native void unsubscribe(String event, AsyncCallback<JavaScriptObject> callback) /*-{
-    var instance = this;
+    public native void unsubscribe(String event, AsyncCallback<JavaScriptObject> callback) /*-{
+        var instance = this;
 
-    $wnd.FB.Event
-        .unsubscribe(
-            event,
-            function(response) {
-              instance.@com.arcbees.facebook.client.event.FacebookEvent::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Lcom/google/gwt/core/client/JavaScriptObject;)(callback, response);
-            });
-  }-*/;
+        $wnd.FB.Event.unsubscribe(
+                event, function (response) {
+                    instance.@com.arcbees.facebook.client.event.FacebookEvent::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Lcom/google/gwt/core/client/JavaScriptObject;)(callback, response);
+                });
+    }-*/;
 
-  protected void callbackSuccess(AsyncCallback<JavaScriptObject> callback, JavaScriptObject obj) {
-    callback.onSuccess(obj);
-  }
+    protected void callbackSuccess(AsyncCallback<JavaScriptObject> callback, JavaScriptObject obj) {
+        callback.onSuccess(obj);
+    }
 }

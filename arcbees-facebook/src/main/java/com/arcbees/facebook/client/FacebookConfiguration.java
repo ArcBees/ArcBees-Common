@@ -17,13 +17,13 @@
 package com.arcbees.facebook.client;
 
 public interface FacebookConfiguration {
-  String getAppId();
+    String getAppId();
 
-  String getScope();
+    String getScope();
 
-  Boolean hasStatus();
+    Boolean hasStatus();
 
-  Boolean hasCookie();
+    Boolean hasCookie();
 
-  Boolean hasXfbml();
+    Boolean hasXfbml();
 }

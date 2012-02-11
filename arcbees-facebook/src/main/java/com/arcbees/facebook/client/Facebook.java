@@ -16,30 +16,124 @@
 
 package com.arcbees.facebook.client;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.arcbees.facebook.client.domain.AuthResponse;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.ScriptElement;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 
-public interface Facebook {
-  /**
-   * @see {@link http://developers.facebook.com/docs/reference/javascript/FB.init/}
-   */
-  void init(String appId, boolean status, boolean cookie, boolean xfbml);
+import javax.inject.Inject;
 
-  /**
-   * @see {@link http://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus/}
-   */
-  void getLoginStatus(AsyncCallback<AuthResponse> callback);
+public class Facebook {
+    private static final String FB_ROOT = "fb-root";
+    private static final String FB_SCRIPT_SRC = Window.Location.getProtocol()
+            + "//connect.facebook.net/en_US/all.js";
+    private static final String FB_SCRIPT_TYPE = "text/javascript";
 
-  /**
-   * @see {@link http://developers.facebook.com/docs/reference/javascript/FB.login/}
-   */
-  void login(String scopeValue, AsyncCallback<AuthResponse> callback);
+    private final Api api;
 
-  /**
-   * @see {@link http://developers.facebook.com/docs/reference/javascript/FB.logout/}
-   */
-  void logout(AsyncCallback<AuthResponse> callback);
+    @Inject
+    public Facebook(final Api api) {
+        this.api = api;
+    }
 
-  void injectFacebookApi(FacebookCallback facebookCallback);
+    public void injectFacebookApi(final Callback callback) {
+        Element firstElement = Document.get().getBody().getFirstChildElement();
 
-  boolean isLoaded();
+        Element fbRoot = Document.get().createDivElement();
+        fbRoot.setId(FB_ROOT);
+
+        firstElement.getParentNode().insertBefore(fbRoot, firstElement);
+
+        ScriptElement fbScript = Document.get().createScriptElement();
+        fbScript.setSrc(FB_SCRIPT_SRC);
+        fbScript.setType(FB_SCRIPT_TYPE);
+
+        fbRoot.getParentNode().insertAfter(fbScript, fbRoot);
+
+        Timer ensureFbIsLoaded = new Timer() {
+            @Override
+            public void run() {
+                if (isLoaded()) {
+                    callback.onSuccess();
+
+                    cancel();
+                }
+            }
+        };
+
+        ensureFbIsLoaded.scheduleRepeating(100);
+    }
+
+    /**
+     * @see <a href="http://developers.facebook.com/docs/reference/javascript/FB.init/">FB.init</a>
+     */
+    public native void init(String appId, boolean status, boolean cookie, boolean xfbml, boolean oauth) /*-{
+        $wnd.FB.init({
+            'appId':appId,
+            'status':status,
+            'cookie':cookie,
+            'xfbml':xfbml,
+            'oauth':oauth
+        });
+    }-*/;
+
+    /**
+     * @see <a href="http://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus/">FB.getLoginSatus</a>
+     */
+    public native AuthResponse getLoginStatus(AsyncCallback<AuthResponse> callback) /*-{
+        var instance = callback;
+
+        $wnd.FB.getLoginStatus(function (response) {
+            return instance.@com.arcbees.facebook.client.AsyncCallback::onSuccess(Ljava/lang/Object;)(response.authResponse);
+        });
+    }-*/;
+
+    /**
+     * @see <a href="http://developers.facebook.com/docs/reference/javascript/FB.login/">FB.login</a>
+     */
+    public native void login(String scopeValue, AsyncCallback<AuthResponse> callback) /*-{
+        var instance = callback;
+
+        $wnd.FB.login(function (response) {
+            if (response.status == @com.arcbees.facebook.client.Status::Connected) {
+                instance.@com.arcbees.facebook.client.AsyncCallback::onSuccess(Ljava/lang/Object;)(response.authResponse);
+            } else {
+                instance.@com.arcbees.facebook.client.AsyncCallback::onFailure(Ljava/lang/Object;)(response.authResponse);
+            }
+        }, {
+            scope:scopeValue
+        });
+    }-*/;
+
+    /**
+     * @see <a href="http://developers.facebook.com/docs/reference/javascript/FB.logout/">FB.logout</a>
+     */
+    public native void logout(Callback callback) /*-{
+        var instance = callback;
+
+        $wnd.FB.logout(function (response) {
+            instance.@com.arcbees.facebook.client.Callback::onSuccess()();
+        });
+    }-*/;
+
+    /**
+     * @see <a href="https://developers.facebook.com/docs/reference/javascript/FB.getAuthResponse/">FB.getAuthResponse</a>
+     */
+    public native AuthResponse getAuthResponse() /*-{
+        return $wnd.FB.getAuthResponse();
+    }-*/;
+
+    public Api api() {
+        return api;
+    }
+
+    protected native boolean isLoaded() /*-{
+        if ($wnd.FB) {
+            return true;
+        } else {
+            return false;
+        }
+    }-*/;
 }
