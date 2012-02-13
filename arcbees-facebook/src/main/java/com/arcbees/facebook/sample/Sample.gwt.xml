@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="sample">
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.inject.Inject"/>
+    <inherits name="com.arcbees.facebook.Facebook"/>
+    <inherits name="com.gwtplatform.mvp.Mvp"/>
+    <inherits name="com.arcbees.core.Mvp"/>
+
+    <entry-point class="com.arcbees.facebook.sample.client.Sample"/>
+
+    <source path="client"/>
+
+    <define-configuration-property name='gin.ginjector' is-multi-valued='false'/>
+    <set-configuration-property name='gin.ginjector' value='com.arcbees.facebook.sample.client.gin.ClientGinjector'/>
+</module>
