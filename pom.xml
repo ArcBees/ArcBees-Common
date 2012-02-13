@@ -19,14 +19,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
-        <maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
-        <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
-        <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
 
         <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.6.1</gae.version>
+        <gae.version>1.6.2.1</gae.version>
         <gin.version>1.5.0</gin.version>
         <guice.version>3.0</guice.version>
         <gwt.version>2.4.0</gwt.version>
@@ -36,6 +34,7 @@
         <junit.version>4.9</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <restlet.version>2.1-RC2</restlet.version>
+        <selenium.version>2.19.0</selenium.version>
     </properties>
 
     <licenses>
@@ -235,6 +234,20 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Javax -->
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -255,56 +268,9 @@
             <version>${restlet.version}</version>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt-maven-plugin.version}</version>
-                <configuration>
-                    <appEngineVersion>${gae.version}</appEngineVersion>
-                    <appEngineHome>${gae.home}</appEngineHome>
-                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
-
-                    <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <runTarget>gulo.html</runTarget>
-
-                    <testTimeOut>180</testTimeOut>
-                    <extraJvmArgs>-Xmx512m -Xss2M</extraJvmArgs>
-
-                    <compileReport>true</compileReport>
-
-                    <!-- UNCOMMENT THESE TO TURN ON INTERNATIONALIZATION
-                    <i18nConstantsBundles>
-                        <i18nConstantsBundle>com.arcbees.guloent.MyConstants</i18nConstantsBundle>
-                    </i18nConstantsBundles>
-                    <i18nMessagesBundles>
-                        <i18nMessagesBundle>com.arcbees.guloent.MyMessages</i18nMessagesBundle>
-                    </i18nMessagesBundles>
-                    -->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <!-- UNCOMMENT THIS TO TURN ON INTERNATIONALIZATION
-                            <goal>i18n</goal>
-                            -->
-                            <goal>resources</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>prepare-package</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -313,67 +279,6 @@
                     <source>${target.jdk}</source>
                     <target>${target.jdk}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <!-- Disable annotation processors during normal compilation -->
-                    <proc>none</proc>
-                </configuration>
-            </plugin>
-
-            <!-- Run annotation processors on src/main/java sources -->
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>${maven-processor-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.gwtplatform</groupId>
-                        <artifactId>gwtp-processors</artifactId>
-                        <version>${gwtp.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources/apt</source>
-                                <source>${project.build.directory}/generated-sources/gwt</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*TestCase.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/*GwtTest.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
