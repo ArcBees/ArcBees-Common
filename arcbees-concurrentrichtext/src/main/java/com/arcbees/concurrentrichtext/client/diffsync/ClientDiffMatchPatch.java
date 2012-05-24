@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ClientDiffMatchPatch implements DiffMatchPatch {
-
     private static final int DiffOperationDELETE = -1;
     private static final int DiffOperationINSERT = 1;
     private static final int DiffOperationEQUAL = 0;
@@ -114,8 +113,7 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
     }
 
     @Override
-    public PatchResultOffset patch_apply_offsets(LinkedList<Patch> patches,
-                                                 CursorOffset cursorOffset, String text) {
+    public PatchResultOffset patch_apply_offsets(LinkedList<Patch> patches, CursorOffset cursorOffset, String text) {
         if (patches.isEmpty()) {
             return new PatchResultOffset(text, true, cursorOffset);
         }
@@ -147,22 +145,19 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
             // patch
             // has an effective expected position of 22.
             int delta = 0;
-            for (Patch aPatch : patches) {
-                int expected_loc = aPatch.start2 + delta;
-                String text1 = diff_text1(aPatch.diffs);
+            for (Patch patch : patches) {
+                int expected_loc = patch.start2 + delta;
+                String text1 = diff_text1(patch.diffs);
                 int start_loc;
                 int end_loc = -1;
                 if (text1.length() > Match_MaxBits) {
                     // patch_splitMax will only provide an oversized pattern in the case
                     // of
                     // a monster delete.
-                    start_loc = match_main(text, text1.substring(0, Match_MaxBits),
-                                           expected_loc);
+                    start_loc = match_main(text, text1.substring(0, Match_MaxBits), expected_loc);
                     if (start_loc != -1) {
-                        end_loc = match_main(text,
-                                             text1.substring(text1.length() - Match_MaxBits), expected_loc
-                                                                                              + text1.length() -
-                                                                                              Match_MaxBits);
+                        end_loc = match_main(text, text1.substring(text1.length() - Match_MaxBits),
+                                expected_loc + text1.length() - Match_MaxBits);
                         if (end_loc == -1 || start_loc >= end_loc) {
                             // Can't find valid trailing context. Drop this patch.
                             start_loc = -1;
@@ -174,43 +169,39 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
                 if (start_loc == -1) {
                     // No match found. :(
                     // Subtract the delta for this failed patch from subsequent patches.
-                    delta -= aPatch.length2 - aPatch.length1;
+                    delta -= patch.length2 - patch.length1;
                 } else {
                     // Found a match. :)
                     delta = start_loc - expected_loc;
                     String text2;
                     if (end_loc == -1) {
-                        text2 = text.substring(start_loc,
-                                               Math.min(start_loc + text1.length(), text.length()));
+                        text2 = text.substring(start_loc, Math.min(start_loc + text1.length(), text.length()));
                     } else {
-                        text2 = text.substring(start_loc,
-                                               Math.min(end_loc + Match_MaxBits, text.length()));
+                        text2 = text.substring(start_loc, Math.min(end_loc + Match_MaxBits, text.length()));
                     }
                     // Run a diff to get a framework of equivalent indices.
                     LinkedList<Diff> diffs = diff_main(text1, text2, false);
-                    if (text1.length() > Match_MaxBits
-                        && diff_levenshtein(diffs) / (float) text1.length() > Patch_DeleteThreshold) {
+                    if (text1.length() > Match_MaxBits && diff_levenshtein(diffs)/(float) text1
+                            .length() > Patch_DeleteThreshold) {
                         // The end points match, but the content is unacceptably bad.
                     } else {
                         int index1 = 0;
-                        for (Diff aDiff : aPatch.diffs) {
-                            if (aDiff.operation != Operation.EQUAL) {
+                        for (Diff diff : patch.diffs) {
+                            if (diff.operation != Operation.EQUAL) {
                                 int index2 = diff_xIndex(diffs, index1);
-                                if (aDiff.operation == Operation.INSERT) {
+                                if (diff.operation == Operation.INSERT) {
                                     // Insertion
-                                    text = text.substring(0, start_loc + index2) + aDiff.text
-                                           + text.substring(start_loc + index2);
+                                    text = text.substring(0, start_loc + index2) + diff.text + text
+                                            .substring(start_loc + index2);
                                     for (int i = 0; i < offsets.size(); i++) {
-                                        if (offsets.get(i) + nullPadding.length() > start_loc
-                                                                                    + index2) {
-                                            offsets.set(i, offsets.get(i) + aDiff.text.length());
+                                        if (offsets.get(i) + nullPadding.length() > start_loc + index2) {
+                                            offsets.set(i, offsets.get(i) + diff.text.length());
                                         }
                                     }
-                                } else if (aDiff.operation == Operation.DELETE) {
+                                } else if (diff.operation == Operation.DELETE) {
                                     // Deletion
                                     int del_start = start_loc + index2;
-                                    int del_end = start_loc
-                                                  + diff_xIndex(diffs, index1 + aDiff.text.length());
+                                    int del_end = start_loc + diff_xIndex(diffs, index1 + diff.text.length());
                                     text = text.substring(0, del_start) + text.substring(del_end);
                                     for (int i = 0; i < offsets.size(); i++) {
                                         if (offsets.get(i) + nullPadding.length() > del_start) {
@@ -223,8 +214,8 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
                                     }
                                 }
                             }
-                            if (aDiff.operation != Operation.DELETE) {
-                                index1 += aDiff.text.length();
+                            if (diff.operation != Operation.DELETE) {
+                                index1 += diff.text.length();
                             }
                         }
                     }
@@ -232,12 +223,11 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
                 x++;
             }
             // Strip the padding off.
-            text = text.substring(nullPadding.length(),
-                                  text.length() - nullPadding.length());
+            text = text.substring(nullPadding.length(), text.length() - nullPadding.length());
         } finally {
         }
-        CursorOffset offset = new CursorOffset(offsets.get(0), offsets.get(1),
-                                               offsets.get(2));
+        CursorOffset offset = new CursorOffset(offsets.get(0), offsets.get(1), offsets.get(2));
+
         return new PatchResultOffset(text, true, offset);
     }
 
@@ -248,17 +238,8 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
         return diffsList;
     }
 
-    private native JavaScriptObject n_diff_main(String text1, String text2,
-                                                boolean checklines)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        var d = dmp.diff_main(text1, text2, checklines);
-        dmp.diff_cleanupSemantic(d);
-        return d;
-    }-*/;
-
     @Override
-    public LinkedList<Diff> diff_main(String text1, String text2,
-                                      boolean checklines) {
+    public LinkedList<Diff> diff_main(String text1, String text2, boolean checklines) {
         JavaScriptObject diffs = n_diff_main(text1, text2, checklines);
         LinkedList<Diff> diffsList = getDiffsList(diffs);
         return diffsList;
@@ -278,11 +259,6 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
     public void diff_cleanupSemantic(LinkedList<Diff> diffs) {
         throw new Error("NotImplemented");
     }
-
-    private native void n_diff_cleanupSemantic(Diff[] diffs)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        dmp.diff_cleanupSemantic(diffs);
-    }-*/;
 
     @Override
     public void diff_cleanupSemanticLossless(LinkedList<Diff> diffs) {
@@ -305,11 +281,6 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
         return n_diff_xIndex(jsoDiffs, loc);
     }
 
-    private native int n_diff_xIndex(JavaScriptObject diffs, int loc) /*-{
-        var dmp = new $wnd.diff_match_patch();
-        return dmp.diff_xIndex(diffs, loc);
-    }-*/;
-
     @Override
     public String diff_prettyHtml(LinkedList<Diff> diffs) {
         throw new Error("NotImplemented");
@@ -320,11 +291,6 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
         JavaScriptObject jsoDiffs = DiffsToJSO(diffs);
         return n_diff_text1(jsoDiffs);
     }
-
-    private native String n_diff_text1(JavaScriptObject diffs)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        return dmp.diff_text1(diffs);
-    }-*/;
 
     @Override
     public String diff_text2(LinkedList<Diff> diffs) {
@@ -337,19 +303,13 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
         return n_diff_levenshtein(jsoDiffs);
     }
 
-    private native int n_diff_levenshtein(JavaScriptObject diffs)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        return dmp.diff_levenshtein(diffs);
-    }-*/;
-
     @Override
     public String diff_toDelta(LinkedList<Diff> diffs) {
         throw new Error("NotImplemented");
     }
 
     @Override
-    public LinkedList<Diff> diff_fromDelta(String text1, String delta)
-            throws IllegalArgumentException {
+    public LinkedList<Diff> diff_fromDelta(String text1, String delta) throws IllegalArgumentException {
         throw new Error("NotImplemented");
     }
 
@@ -358,53 +318,26 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
         return n_match_main(text, pattern, loc);
     }
 
-    private native int n_match_main(String text, String pattern, int loc)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        return dmp.match_main(text, pattern, loc);
-    }-*/;
-
     @Override
     public LinkedList<Patch> patch_make(String text1, String text2) {
         Patch[] patches = n_patch_make(text1, text2);
-        LinkedList<Patch> patchesList = new LinkedList<Patch>(
-                Arrays.asList(patches));
+        LinkedList<Patch> patchesList = new LinkedList<Patch>(Arrays.asList(patches));
         return patchesList;
     }
-
-    private native Patch[] n_patch_make(String text1, String text2)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        var d = dmp.patch_make(text1, text2);
-        return d;
-    }-*/;
 
     @Override
     public LinkedList<Patch> patch_make(LinkedList<Diff> diffs) {
         Patch[] patches = n_patch_make((Diff[]) diffs.toArray());
-        LinkedList<Patch> patchesList = new LinkedList<Patch>(
-                Arrays.asList(patches));
+        LinkedList<Patch> patchesList = new LinkedList<Patch>(Arrays.asList(patches));
         return patchesList;
     }
 
-    private native Patch[] n_patch_make(Diff[] diffs)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        var d = dmp.patch_make(diffs);
-        return d;
-    }-*/;
-
     @Override
-    public LinkedList<Patch> patch_make(String text1, String text2,
-                                        LinkedList<Diff> diffs) {
+    public LinkedList<Patch> patch_make(String text1, String text2, LinkedList<Diff> diffs) {
         JavaScriptObject patches = n_patch_make(text1, DiffsToJSO(diffs));
         LinkedList<Patch> patchesList = getPatchesList(patches);
         return patchesList;
     }
-
-    private native JavaScriptObject n_patch_make(String text1,
-                                                 JavaScriptObject diffs)/*-{
-        var dmp = new $wnd.diff_match_patch();
-        var d = dmp.patch_make(text1, diffs);
-        return d;
-    }-*/;
 
     @Override
     public LinkedList<Patch> patch_make(String text1, LinkedList<Diff> diffs) {
@@ -422,10 +355,53 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
     public Object[] patch_apply(LinkedList<Patch> patches, String text) {
         JavaScriptObject patchResult = n_patch_apply(PatchesToJSO(patches), text);
         JSONArray obj = new JSONArray(patchResult);
-        Object[] object = {
-                obj.get(0).isString().stringValue(), getBooleans(obj.get(1).isArray())};
+        Object[] object = {obj.get(0).isString().stringValue(), getBooleans(obj.get(1).isArray())};
         return object;
     }
+
+    @Override
+    public String patch_addPadding(LinkedList<Patch> patches) {
+        JavaScriptObject jsoPatches = PatchesToJSO(patches);
+        return n_patch_addPadding(jsoPatches);
+    }
+
+    @Override
+    public void patch_splitMax(LinkedList<Patch> patches) {
+        throw new Error("NotImplemented");
+    }
+
+    @Override
+    public String patch_toText(List<Patch> patches) {
+        throw new Error("NotImplemented");
+    }
+
+    @Override
+    public List<Patch> patch_fromText(String textline) throws IllegalArgumentException {
+        throw new Error("NotImplemented");
+    }
+
+    private native JavaScriptObject n_patch_splitMaxNative(JavaScriptObject patches)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        dmp.patch_splitMax(patches);
+        return patches;
+    }-*/;
+
+    private LinkedList<Patch> patch_splitMaxNative(LinkedList<Patch> patches) {
+        JavaScriptObject jsoPatches = PatchesToJSO(patches);
+        JavaScriptObject jsoReturn = n_patch_splitMaxNative(jsoPatches);
+        return getPatchesList(jsoReturn);
+    }
+
+    private native String n_patch_addPadding(JavaScriptObject patches)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        return dmp.patch_addPadding(patches);
+    }-*/;
+
+    private native JavaScriptObject n_patch_apply(JavaScriptObject patches, String text)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        var d = dmp.patch_apply(patches, text);
+        return d;
+    }-*/;
 
     private boolean[] getBooleans(JSONArray array) {
         int size = array.size();
@@ -437,52 +413,53 @@ public class ClientDiffMatchPatch implements DiffMatchPatch {
         return bools;
     }
 
-    private native JavaScriptObject n_patch_apply(JavaScriptObject patches,
-                                                  String text)/*-{
+    private native JavaScriptObject n_patch_make(String text1, JavaScriptObject diffs)/*-{
         var dmp = new $wnd.diff_match_patch();
-        var d = dmp.patch_apply(patches, text);
+        var d = dmp.patch_make(text1, diffs);
         return d;
     }-*/;
 
-    @Override
-    public String patch_addPadding(LinkedList<Patch> patches) {
-        JavaScriptObject jsoPatches = PatchesToJSO(patches);
-        return n_patch_addPadding(jsoPatches);
-    }
-
-    private native String n_patch_addPadding(JavaScriptObject patches)/*-{
+    private native Patch[] n_patch_make(Diff[] diffs)/*-{
         var dmp = new $wnd.diff_match_patch();
-        return dmp.patch_addPadding(patches);
+        var d = dmp.patch_make(diffs);
+        return d;
     }-*/;
 
-    @Override
-    public void patch_splitMax(LinkedList<Patch> patches) {
-        throw new Error("NotImplemented");
-
-    }
-
-    private LinkedList<Patch> patch_splitMaxNative(LinkedList<Patch> patches) {
-        JavaScriptObject jsoPatches = PatchesToJSO(patches);
-        JavaScriptObject jsoReturn = n_patch_splitMaxNative(jsoPatches);
-        return getPatchesList(jsoReturn);
-    }
-
-    private native JavaScriptObject n_patch_splitMaxNative(
-            JavaScriptObject patches)/*-{
+    private native Patch[] n_patch_make(String text1, String text2)/*-{
         var dmp = new $wnd.diff_match_patch();
-        dmp.patch_splitMax(patches);
-        return patches;
+        var d = dmp.patch_make(text1, text2);
+        return d;
     }-*/;
 
-    @Override
-    public String patch_toText(List<Patch> patches) {
-        throw new Error("NotImplemented");
-    }
+    private native int n_match_main(String text, String pattern, int loc)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        return dmp.match_main(text, pattern, loc);
+    }-*/;
 
-    @Override
-    public List<Patch> patch_fromText(String textline)
-            throws IllegalArgumentException {
-        throw new Error("NotImplemented");
-    }
+    private native int n_diff_levenshtein(JavaScriptObject diffs)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        return dmp.diff_levenshtein(diffs);
+    }-*/;
 
+    private native String n_diff_text1(JavaScriptObject diffs)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        return dmp.diff_text1(diffs);
+    }-*/;
+
+    private native JavaScriptObject n_diff_main(String text1, String text2, boolean checklines)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        var d = dmp.diff_main(text1, text2, checklines);
+        dmp.diff_cleanupSemantic(d);
+        return d;
+    }-*/;
+
+    private native void n_diff_cleanupSemantic(Diff[] diffs)/*-{
+        var dmp = new $wnd.diff_match_patch();
+        dmp.diff_cleanupSemantic(diffs);
+    }-*/;
+
+    private native int n_diff_xIndex(JavaScriptObject diffs, int loc) /*-{
+        var dmp = new $wnd.diff_match_patch();
+        return dmp.diff_xIndex(diffs, loc);
+    }-*/;
 }

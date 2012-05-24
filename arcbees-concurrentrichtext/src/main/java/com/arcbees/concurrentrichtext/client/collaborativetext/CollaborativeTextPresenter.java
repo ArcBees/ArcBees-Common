@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 ArcBees Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -49,17 +49,6 @@ import java.util.List;
 
 public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTextPresenter.MyView>
         implements CollaborativeTextUiHandlers {
-    private final DispatchAsync dispatcher;
-    private final String channelKey;
-    private JoinChannelFactory joinChannelFactory;
-    private String clientChannel;
-    private boolean editing;
-    private AdaptativeTimer timerEdit;
-    private final MyView myView;
-    private DifferentialSyncFactory diffSyncFactory;
-    private DifferentialSync diffSync;
-    private final ClientLogger logger;
-
     public interface MyView extends View, HasUiHandlers<CollaborativeTextUiHandlers> {
         String getText();
 
@@ -78,28 +67,48 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
         void setEditable(boolean editable);
     }
 
+    private final DispatchAsync dispatcher;
+    private final String channelKey;
+    private final DifferentialSyncFactory diffSyncFactory;
+    private final ClientLogger logger;
+    private final JoinChannelFactory joinChannelFactory;
+    private String clientChannel;
+    private boolean editing;
+    private AdaptativeTimer timerEdit;
+    private DifferentialSync diffSync;
+
     @Inject
     public CollaborativeTextPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher,
-            JoinChannelFactory joinChannelFactory, DifferentialSyncFactory diffSyncFactory, ClientLogger logger,
-            @Named("DiffTimer") int diffTimerDelay, @Assisted final String contentID) {
+            final JoinChannelFactory joinChannelFactory, final DifferentialSyncFactory diffSyncFactory,
+            final ClientLogger logger, @Named("DiffTimer") final int diffTimerDelay, @Assisted final String contentID) {
         super(eventBus, view);
+
         this.channelKey = contentID;
         this.dispatcher = dispatcher;
         this.joinChannelFactory = joinChannelFactory;
         this.diffSyncFactory = diffSyncFactory;
         this.logger = logger;
-        myView = getView();
+
         initialize(diffTimerDelay);
+    }
+
+    @Override
+    public void onJoinChannel() {
+        if (!editing) {
+            editing = true;
+            joinChannel();
+        }
     }
 
     @Override
     protected void onUnbind() {
         super.onUnbind();
+
         leaveChannel();
     }
 
     private void initialize(int diffTimerDelay) {
-        myView.setUiHandlers(this);
+        getView().setUiHandlers(this);
         timerEdit = new AdaptativeTimer(diffTimerDelay, diffTimerDelay) {
             @Override
             public void timerTick() {
@@ -110,7 +119,7 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
     }
 
     private void diff() {
-        String text = myView.getText();
+        String text = getView().getText();
         diffSync.onTextChange(text);
     }
 
@@ -124,7 +133,7 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
 
             @Override
             public void onFailure(Throwable caught) {
-                myView.leaveEditMode();
+                getView().leaveEditMode();
             }
         });
     }
@@ -135,12 +144,6 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
             @Override
             public void onSuccess(SendEditsResult result) {
                 onMessageReceived(result);
-            }
-
-            @Override
-            public void onFailure(Throwable caught) {
-                // DEBUG
-                caught.printStackTrace();
             }
         });
     }
@@ -157,9 +160,9 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
         });
 
         diffSync.restore(baseText, 0, 0);
-        myView.setTitle("OK to edit text");
-        myView.setText(baseText);
-        myView.setEditable(true);
+        getView().setTitle("OK to edit text");
+        getView().setText(baseText);
+        getView().setEditable(true);
         timerEdit.start();
     }
 
@@ -168,48 +171,38 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
         boolean textChanged = false;
         ApplyEditsResultOffset applyResult = null;
 
-        myView.setEditable(false);
-        CursorOffset cursor = myView.getCursorOffset();
+        getView().setEditable(false);
+        CursorOffset cursor = getView().getCursorOffset();
         if (msgType.equals(SendEditsResult.ResultType.EDITS)) {
             SendEditsResultEdits editsMessage = (SendEditsResultEdits) message;
             applyResult = diffSync.onEditsReceived(editsMessage.getEdits(), cursor);
             textChanged = applyResult.hasAppliedEdits();
         } else if (msgType.equals(SendEditsResult.ResultType.RESTORE)) {
             SendEditsResultRestore restoreMessage = (SendEditsResultRestore) message;
-            log(LogLevel.SEVERE,
-                    new StringBuilder().append("Client ").append(clientChannel).append(" received RESTORE message : ")
-                            .append(restoreMessage.getClientVersion()).append("-")
-                            .append(restoreMessage.getServerVersion()).append("-").append(restoreMessage.getText())
-                            .toString());
+            log(LogLevel.SEVERE, makeRestoreMessageString(restoreMessage));
             diffSync.restore(restoreMessage.getText(), restoreMessage.getClientVersion(),
                     restoreMessage.getServerVersion());
             textChanged = true;
         }
 
         if (textChanged) {
-            myView.setText(diffSync.getText());
+            getView().setText(diffSync.getText());
             if (applyResult != null) {
                 cursor = applyResult.getCursorOffset();
             }
-            myView.setCursorOffset(cursor);
+            getView().setCursorOffset(cursor);
         }
-        myView.setEditable(true);
+        getView().setEditable(true);
+    }
+
+    private String makeRestoreMessageString(SendEditsResultRestore restoreMessage) {
+        return new StringBuilder().append("Client ").append(clientChannel).append(" received RESTORE message : ")
+                .append(restoreMessage.getClientVersion()).append("-").append(restoreMessage.getServerVersion())
+                .append("-").append(restoreMessage.getText()).toString();
     }
 
     private void log(LogLevel level, String message) {
         logger.log(level, message);
-    }
-
-    public String getChannelKey() {
-        return channelKey;
-    }
-
-    @Override
-    public void onJoinChannel() {
-        if (!editing) {
-            editing = true;
-            joinChannel();
-        }
     }
 
     private void leaveChannel() {
@@ -217,11 +210,8 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
         dispatcher.execute(action, new AsyncCallbackImpl<NoResult>() {
             @Override
             public void onSuccess(NoResult result) {
-                closeChannel();
+                getView().leaveEditMode();
             }
         });
-    }
-
-    private void closeChannel() {
     }
 }

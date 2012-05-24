@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 ArcBees Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,25 +16,21 @@
 
 package com.arcbees.concurrentrichtext.client.diffsync;
 
+import com.google.inject.Inject;
+
 import com.arcbees.concurrentrichtext.shared.diffsync.AbstractDocumentShadow;
 import com.arcbees.concurrentrichtext.shared.diffsync.DiffHandler;
 import com.arcbees.concurrentrichtext.shared.diffsync.DocumentShadow;
-import com.google.inject.Inject;
 
 public final class ClientDocumentShadowImpl extends AbstractDocumentShadow {
-
     private static final DocumentType docType = DocumentType.Client;
     private final DiffHandler diffHandler;
 
     @Inject
     public ClientDocumentShadowImpl(DiffHandler diffHandler) {
         super(diffHandler);
-        this.diffHandler = diffHandler;
-    }
 
-    @Override
-    protected DocumentType getDocType() {
-        return docType;
+        this.diffHandler = diffHandler;
     }
 
     @Override
@@ -48,13 +44,8 @@ public final class ClientDocumentShadowImpl extends AbstractDocumentShadow {
     }
 
     @Override
-    protected void loadCache() {
-
-    }
-
-    @Override
-    protected void saveCache() {
-
+    protected DocumentType getDocType() {
+        return docType;
     }
 
     @Override
@@ -64,4 +55,13 @@ public final class ClientDocumentShadowImpl extends AbstractDocumentShadow {
         return cloneDocShadow;
     }
 
+    @Override
+    protected void loadCache() {
+        // No cache on client side
+    }
+
+    @Override
+    protected void saveCache() {
+        // No cache on client side
+    }
 }

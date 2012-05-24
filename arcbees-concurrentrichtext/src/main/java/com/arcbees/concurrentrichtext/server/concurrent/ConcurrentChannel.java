@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 ArcBees Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,54 +14,43 @@
  * the License.
  */
 
-package com.arcbees.concurrentrichtext.server.collaborativetext;
+package com.arcbees.concurrentrichtext.server.concurrent;
 
-import com.arcbees.concurrentrichtext.server.cache.CollaborationChannelCache;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
+import com.arcbees.concurrentrichtext.server.cache.ConcurrentChannelCache;
 import com.arcbees.concurrentrichtext.server.cache.DiffSyncCache;
 import com.arcbees.concurrentrichtext.server.cache.ServerCache;
 import com.arcbees.concurrentrichtext.server.cache.ServerCacheFactory;
 import com.arcbees.concurrentrichtext.server.diffsync.DifferentialSyncHandler;
 import com.arcbees.concurrentrichtext.server.diffsync.PatchApplyException;
 import com.arcbees.concurrentrichtext.shared.diffsync.Edits;
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollaborationChannel implements CollaborationConnectionListener {
-
+public class ConcurrentChannel implements ConcurrentConnectionListener {
+    private final DifferentialSyncHandler diffSyncHandler;
+    private final String channelKey;
+    private final ServerCache<ConcurrentChannelCache> cache;
     private int clientCount;
     private int uniqueCount;
-    private final String channelKey;
-    private final DifferentialSyncHandler diffSyncHandler;
-    private ServerCache<CollaborationChannelCache> cache;
-    private List<CollaborationClient> clients;
+    private List<ConcurrentClient> clients;
 
     @Inject
-    public CollaborationChannel(final DifferentialSyncHandler diffSyncHandler,
-                                ServerCacheFactory serverCacheFactory, @Assisted String channelKey) {
+    public ConcurrentChannel(final DifferentialSyncHandler diffSyncHandler, final ServerCacheFactory serverCacheFactory,
+            @Assisted final String channelKey) {
         this.channelKey = channelKey;
+        this.diffSyncHandler = diffSyncHandler;
 
         cache = serverCacheFactory.create(DiffSyncCache.getCollabChannelKey(channelKey));
-        CollaborationChannelCache collabCache = getOrCreateCacheObject();
-        clientCount = collabCache.getClientCount();
-        uniqueCount = collabCache.getUniqueCount();
-        clients = collabCache.getClients();
+        ConcurrentChannelCache concurrentChannelCache = getOrCreateCacheObject();
 
-        this.diffSyncHandler = diffSyncHandler;
+        clientCount = concurrentChannelCache.getClientCount();
+        uniqueCount = concurrentChannelCache.getUniqueCount();
+        clients = concurrentChannelCache.getClients();
+
         diffSyncHandler.initialize(channelKey);
-    }
-
-    private CollaborationChannelCache getOrCreateCacheObject() {
-        CollaborationChannelCache collabCache = cache.getObject();
-        if (collabCache == null) {
-            collabCache = new CollaborationChannelCache(0, 0,
-                                                        new ArrayList<CollaborationClient>());
-            cache.putObject(collabCache);
-        }
-
-        return collabCache;
     }
 
     public String getChannelKey() {
@@ -85,7 +74,7 @@ public class CollaborationChannel implements CollaborationConnectionListener {
     }
 
     @Override
-    public void onClientConnected(CollaborationClient client) {
+    public void onClientConnected(final ConcurrentClient client) {
         loadCache();
         diffSyncHandler.addClient(client.getClientChannel());
         clients.add(client);
@@ -93,20 +82,8 @@ public class CollaborationChannel implements CollaborationConnectionListener {
         saveCache();
     }
 
-    private void saveCache() {
-        cache.putObject(new CollaborationChannelCache(clientCount, uniqueCount,
-                                                      clients));
-    }
-
-    private void loadCache() {
-        CollaborationChannelCache collabCache = cache.getObject();
-        clientCount = collabCache.getClientCount();
-        uniqueCount = collabCache.getUniqueCount();
-        clients = collabCache.getClients();
-    }
-
     @Override
-    public void onClientDisconnected(CollaborationClient client) {
+    public void onClientDisconnected(final ConcurrentClient client) {
         loadCache();
         diffSyncHandler.removeClient(client.getClientChannel());
         clients.remove(client);
@@ -114,8 +91,7 @@ public class CollaborationChannel implements CollaborationConnectionListener {
         saveCache();
     }
 
-    public void applyEditsToClient(List<Edits> editsList, String client)
-            throws PatchApplyException {
+    public void applyEditsToClient(List<Edits> editsList, String client) throws PatchApplyException {
         diffSyncHandler.applyEdits(editsList, client);
     }
 
@@ -127,8 +103,8 @@ public class CollaborationChannel implements CollaborationConnectionListener {
         return editsList;
     }
 
-    public CollaborationClient getClient(String clientChannel) {
-        for (CollaborationClient client : clients) {
+    public ConcurrentClient getClient(String clientChannel) {
+        for (ConcurrentClient client : clients) {
             if (clientChannel.equals(client.getClientChannel())) {
                 return client;
             }
@@ -141,4 +117,24 @@ public class CollaborationChannel implements CollaborationConnectionListener {
         return diffSyncHandler.getText();
     }
 
+    private ConcurrentChannelCache getOrCreateCacheObject() {
+        ConcurrentChannelCache concurrentChannelCache = cache.getObject();
+        if (concurrentChannelCache == null) {
+            concurrentChannelCache = new ConcurrentChannelCache(0, 0, new ArrayList<ConcurrentClient>());
+            cache.putObject(concurrentChannelCache);
+        }
+
+        return concurrentChannelCache;
+    }
+
+    private void saveCache() {
+        cache.putObject(new ConcurrentChannelCache(clientCount, uniqueCount, clients));
+    }
+
+    private void loadCache() {
+        ConcurrentChannelCache concurrentChannelCache = cache.getObject();
+        clientCount = concurrentChannelCache.getClientCount();
+        uniqueCount = concurrentChannelCache.getUniqueCount();
+        clients = concurrentChannelCache.getClients();
+    }
 }

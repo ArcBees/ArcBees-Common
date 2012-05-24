@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 ArcBees Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,11 +14,10 @@
  * the License.
  */
 
-package com.arcbees.concurrentrichtext.server.collaborativetext;
+package com.arcbees.concurrentrichtext.server.concurrent;
 
 import com.google.inject.Inject;
 
-import com.arcbees.concurrentrichtext.server.cache.DiffSyncCache;
 import com.arcbees.concurrentrichtext.server.diffsync.PatchApplyException;
 import com.arcbees.concurrentrichtext.shared.collaborativetext.JoinChannelResult;
 import com.arcbees.concurrentrichtext.shared.collaborativetext.SendEdits;
@@ -30,15 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CollaborationHandler {
-
-    private Map<String, CollaborationChannel> collabChannels;
-    private final CollaborationChannelFactory collabChannelFactory;
+public class ConcurrentHandler {
+    private final Map<String, ConcurrentChannel> concurrentChannels;
+    private final ConcurrentChannelFactory concurrentChannelFactory;
 
     @Inject
-    public CollaborationHandler(final CollaborationChannelFactory collabChannelFactory, DiffSyncCache cache) {
-        this.collabChannelFactory = collabChannelFactory;
-        collabChannels = new HashMap<String, CollaborationChannel>();
+    public ConcurrentHandler(final ConcurrentChannelFactory concurrentChannelFactory) {
+        this.concurrentChannelFactory = concurrentChannelFactory;
+        concurrentChannels = new HashMap<String, ConcurrentChannel>();
     }
 
     public JoinChannelResult joinChannel(String channelKey) {
@@ -47,23 +45,8 @@ public class CollaborationHandler {
         addClientToChannel(channelKey, clientChannelKey);
 
         String serverText = getServerTextForChannel(channelKey);
-        JoinChannelResult result = new JoinChannelResult(clientChannelKey, serverText);
 
-        return result;
-    }
-
-    private String getServerTextForChannel(String channelKey) {
-        CollaborationChannel serverChannel = getServerChannel(channelKey);
-
-        return serverChannel.getText();
-    }
-
-    private CollaborationChannel getServerChannel(String channelKey) {
-        CollaborationChannel channel = collabChannels.get(channelKey);
-        if (channel == null) {
-            channel = createChannel(channelKey);
-        }
-        return channel;
+        return new JoinChannelResult(clientChannelKey, serverText);
     }
 
     public SendEditsResult receiveEdits(final SendEdits message) {
@@ -71,19 +54,42 @@ public class CollaborationHandler {
         String clientChannelKey = message.getClientChannel();
         List<Edits> edits = message.getEdits();
 
-        SendEditsResult msg = synchronizeEdits(channelKey, clientChannelKey, edits);
+        return synchronizeEdits(channelKey, clientChannelKey, edits);
+    }
 
-        return msg;
+    public void leaveChannel(String clientChannel, String channelKey) {
+        ConcurrentChannel channel = getServerChannel(channelKey);
+        ConcurrentClient client = channel.getClient(clientChannel);
+
+        if (client != null) {
+            channel.onClientDisconnected(client);
+        }
+    }
+
+    private String getServerTextForChannel(String channelKey) {
+        ConcurrentChannel serverChannel = getServerChannel(channelKey);
+
+        return serverChannel.getText();
+    }
+
+    private ConcurrentChannel getServerChannel(String channelKey) {
+        ConcurrentChannel channel = concurrentChannels.get(channelKey);
+
+        if (channel == null) {
+            channel = createChannel(channelKey);
+        }
+
+        return channel;
     }
 
     private SendEditsResult synchronizeEdits(String channelKey, String clientChannelKey, List<Edits> edits) {
-        CollaborationChannel channel = getServerChannel(channelKey);
+        ConcurrentChannel channel = getServerChannel(channelKey);
         if (channel == null) {
             createChannel(channelKey);
             addClientToChannel(channelKey, clientChannelKey);
         }
-        SendEditsResult result;
 
+        SendEditsResult result;
         try {
             channel.applyEditsToClient(edits, clientChannelKey);
             edits = getEditsFromServer(channel, clientChannelKey);
@@ -95,23 +101,12 @@ public class CollaborationHandler {
         return result;
     }
 
-    private List<Edits> getEditsFromServer(CollaborationChannel channel, String clientChannelKey) {
-        List<Edits> edits;
-        edits = channel.getServerEdits(clientChannelKey);
-        return edits;
-    }
-
-    public void leaveChannel(String clientChannel, String channelKey) {
-        CollaborationChannel channel = getServerChannel(channelKey);
-        CollaborationClient client = channel.getClient(clientChannel);
-
-        if (client != null) {
-            channel.onClientDisconnected(client);
-        }
+    private List<Edits> getEditsFromServer(ConcurrentChannel channel, String clientChannelKey) {
+        return channel.getServerEdits(clientChannelKey);
     }
 
     private String getClientChannelKey(String channelKey) {
-        CollaborationChannel channel = getServerChannel(channelKey);
+        ConcurrentChannel channel = getServerChannel(channelKey);
         if (channel == null) {
             channel = createChannel(channelKey);
         }
@@ -119,16 +114,17 @@ public class CollaborationHandler {
         return channel.getNextChannelID();
     }
 
-    private CollaborationChannel createChannel(String channelKey) {
-        CollaborationChannel channel = collabChannelFactory.create(channelKey);
-        collabChannels.put(channelKey, channel);
+    private ConcurrentChannel createChannel(String channelKey) {
+        ConcurrentChannel channel = concurrentChannelFactory.create(channelKey);
+        concurrentChannels.put(channelKey, channel);
+
         return channel;
     }
 
-    private CollaborationClient addClientToChannel(String channelKey, String clientChannelKey) {
-        CollaborationChannel channel = getServerChannel(channelKey);
+    private ConcurrentClient addClientToChannel(String channelKey, String clientChannelKey) {
+        ConcurrentChannel channel = getServerChannel(channelKey);
 
-        CollaborationClient client = new CollaborationClient(channelKey, clientChannelKey);
+        ConcurrentClient client = new ConcurrentClient(channelKey, clientChannelKey);
         channel.onClientConnected(client);
 
         return client;

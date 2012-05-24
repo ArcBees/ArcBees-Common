@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 ArcBees Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,6 +16,8 @@
 
 package com.arcbees.concurrentrichtext.server.diffsync;
 
+import com.google.inject.Inject;
+
 import com.arcbees.concurrentrichtext.server.cache.DiffSyncCache;
 import com.arcbees.concurrentrichtext.server.cache.DocumentShadowCache;
 import com.arcbees.concurrentrichtext.server.cache.ServerCache;
@@ -23,26 +25,19 @@ import com.arcbees.concurrentrichtext.server.cache.ServerCacheFactory;
 import com.arcbees.concurrentrichtext.shared.diffsync.AbstractDocumentShadow;
 import com.arcbees.concurrentrichtext.shared.diffsync.DiffHandler;
 import com.arcbees.concurrentrichtext.shared.diffsync.DocumentShadow;
-import com.google.inject.Inject;
 
 public final class ServerDocumentShadowImpl extends AbstractDocumentShadow {
     private static final DocumentType docType = DocumentType.Server;
     private final ServerCacheFactory serverCacheFactory;
-    private ServerCache<DocumentShadowCache> backupCache;
     private final DiffHandler diffHandler;
+    private ServerCache<DocumentShadowCache> backupCache;
 
     @Inject
-    public ServerDocumentShadowImpl(DiffHandler diffHandler,
-                                    ServerCacheFactory serverCacheFactory) {
+    public ServerDocumentShadowImpl(final DiffHandler diffHandler, final ServerCacheFactory serverCacheFactory) {
         super(diffHandler);
 
         this.diffHandler = diffHandler;
         this.serverCacheFactory = serverCacheFactory;
-    }
-
-    @Override
-    protected DocumentType getDocType() {
-        return docType;
     }
 
     @Override
@@ -66,23 +61,23 @@ public final class ServerDocumentShadowImpl extends AbstractDocumentShadow {
             if (backupShadow == null) {
                 backupShadow = createNewDocument();
             }
-            backupShadow.restore(docCache.getClientVersion(),
-                                 docCache.getServerVersion(), docCache.getText());
+            backupShadow.restore(docCache.getClientVersion(), docCache.getServerVersion(), docCache.getText());
         }
     }
 
     @Override
     protected void saveCache() {
-        backupCache.putObject(new DocumentShadowCache(getId(),
-                                                      backupShadow.getText(), backupShadow.getVersion(),
-                                                      backupShadow.getTargetVersion()));
+        backupCache.putObject(new DocumentShadowCache(getId(), backupShadow.getText(), backupShadow.getVersion(),
+                backupShadow.getTargetVersion()));
     }
 
     @Override
     protected DocumentShadow createNewDocument() {
-        DocumentShadow cloneDocShadow;
-        cloneDocShadow = new ServerDocumentShadowImpl(diffHandler,
-                                                      serverCacheFactory);
-        return cloneDocShadow;
+        return new ServerDocumentShadowImpl(diffHandler, serverCacheFactory);
+    }
+
+    @Override
+    protected DocumentType getDocType() {
+        return docType;
     }
 }

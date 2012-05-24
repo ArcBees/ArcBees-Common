@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package com.arcbees.concurrentrichtext.client.diffsync;
 
 import com.google.inject.Inject;
@@ -14,22 +30,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractDifferentialSync implements DifferentialSync {
-
     protected final LinkedList<Edits> editsQueue;
-
     private final DocumentShadow docShadow;
     private final DiffHandler diffHandler;
     private final DifferentialSyncCallback callback;
-    private boolean readyToSend;
-    private String currentText;
     private final ClientLogger logger;
-
-    private int lastAcknowledge;
+    private Boolean readyToSend;
+    private String currentText;
+    private Integer lastAcknowledge;
 
     @Inject
-    public AbstractDifferentialSync(DiffHandler diffHandler,
-                                    DocumentShadow docShadow, ClientLogger logger,
-                                    @Assisted DifferentialSyncCallback callback) {
+    public AbstractDifferentialSync(final DiffHandler diffHandler, final DocumentShadow docShadow,
+            final ClientLogger logger, @Assisted final DifferentialSyncCallback callback) {
         this.diffHandler = diffHandler;
         this.docShadow = docShadow;
         this.logger = logger;
@@ -42,9 +54,9 @@ public abstract class AbstractDifferentialSync implements DifferentialSync {
 
     @Override
     public final void restore(String text, int clientVersion, int serverVersion) {
+        editsQueue.clear();
         docShadow.restore(clientVersion, serverVersion, text);
         currentText = text;
-        editsQueue.clear();
         readyToSend = true;
     }
 
@@ -60,25 +72,13 @@ public abstract class AbstractDifferentialSync implements DifferentialSync {
         addEditsToQueue(edits);
     }
 
-    private void addEditsToQueue(Edits edits) {
-        if (editsQueue.size() == 0 || edits.hasEdits()) {
-            logger.log(
-                    LogLevel.WARNING,
-                    "Client queuing edits : " + edits.getVersion() + "-"
-                    + edits.getTargetVersion());
-            editsQueue.add(edits);
-            editsAdded();
-        }
-    }
-
     @Override
     public String getText() {
         return currentText;
     }
 
     @Override
-    public final ApplyEditsResultOffset onEditsReceived(List<Edits> editsList,
-                                                        CursorOffset cursor) {
+    public final ApplyEditsResultOffset onEditsReceived(List<Edits> editsList, CursorOffset cursor) {
         ApplyEditsResultOffset applyEditsResult = applyEdits(editsList, cursor);
 
         cleanupEditsQueue();
@@ -86,41 +86,7 @@ public abstract class AbstractDifferentialSync implements DifferentialSync {
         return applyEditsResult;
     }
 
-    private ApplyEditsResultOffset applyEdits(List<Edits> editsList,
-                                              CursorOffset cursor) {
-        boolean hasAppliedEdits = false;
-        for (Edits edits : editsList) {
-            if (edits.hasEdits()) {
-                docShadow.applyEdits(edits);
-                PatchResultOffset result = diffHandler.applyEdits(edits, cursor,
-                                                                  currentText);
-                currentText = result.getNewText();
-                cursor = result.getCursorOffset();
-                hasAppliedEdits = true;
-            }
-            lastAcknowledge = edits.getTargetVersion();
-        }
-
-        logger.log(LogLevel.WARNING, "LastAcknowledge : " + lastAcknowledge);
-
-        return new ApplyEditsResultOffset(hasAppliedEdits, cursor);
-    }
-
-    private void cleanupEditsQueue() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < editsQueue.size(); i++) {
-            Edits edits = editsQueue.get(i);
-            if (lastAcknowledge > edits.getVersion()) {
-                // if (docShadow.getTargetVersion() >= edits.getTargetVersion()) {
-                sb.append("Removing edits from queue : " + edits.getVersion() + "-"
-                          + edits.getTargetVersion());
-                editsQueue.remove(i);
-                i--;
-            }
-        }
-        logger.log(LogLevel.WARNING, sb.toString());
-        readyToSend = true;
-    }
+    protected abstract void editsAdded();
 
     protected final void synchronize() {
         if (readyToSend) {
@@ -129,6 +95,48 @@ public abstract class AbstractDifferentialSync implements DifferentialSync {
         }
     }
 
-    protected abstract void editsAdded();
+    private ApplyEditsResultOffset applyEdits(List<Edits> editsList, CursorOffset cursor) {
+        boolean hasAppliedEdits = false;
+        for (Edits edits : editsList) {
+            if (edits.hasEdits()) {
+                docShadow.applyEdits(edits);
+                PatchResultOffset result = diffHandler.applyEdits(edits, cursor, currentText);
+                currentText = result.getNewText();
+                cursor = result.getCursorOffset();
+                hasAppliedEdits = true;
+            }
 
+            lastAcknowledge = edits.getTargetVersion();
+        }
+
+        logger.log(LogLevel.WARNING, "LastAcknowledge : " + lastAcknowledge);
+
+        return new ApplyEditsResultOffset(hasAppliedEdits, cursor);
+    }
+
+    private void addEditsToQueue(Edits edits) {
+        if (editsQueue.size() == 0 || edits.hasEdits()) {
+            logger.log(LogLevel.WARNING,
+                    "Client queuing edits : " + edits.getVersion() + "-" + edits.getTargetVersion());
+            editsQueue.add(edits);
+            editsAdded();
+        }
+    }
+
+    private void cleanupEditsQueue() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < editsQueue.size(); i++) {
+            Edits edits = editsQueue.get(i);
+            if (lastAcknowledge > edits.getVersion()) {
+                // TODO : Figure out why this is commented
+                // if (docShadow.getTargetVersion() >= edits.getTargetVersion()) {
+                sb.append("Removing edits from queue : " + edits.getVersion() + "-" + edits.getTargetVersion());
+                editsQueue.remove(i);
+                i--;
+            }
+        }
+
+        logger.log(LogLevel.WARNING, sb.toString());
+        readyToSend = true;
+    }
 }

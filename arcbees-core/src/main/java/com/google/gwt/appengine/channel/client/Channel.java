@@ -31,18 +31,13 @@ public class Channel extends JavaScriptObject {
             listener.@com.google.gwt.appengine.channel.client.SocketListener::onOpen()();
         };
         socket.onmessage = function(event) {
-            listener.
-                    @com.google.gwt.appengine.channel.client.SocketListener::onMessage(Ljava/lang/String;)
-                    (event.data);
+            listener.@com.google.gwt.appengine.channel.client.SocketListener::onMessage(Ljava/lang/String;)(event.data);
         };
         socket.onerror = function(error) {
-            listener.
-                    @com.google.gwt.appengine.channel.client.SocketListener::onError(Lcom/google/gwt/appengine/channel/client/SocketError;)
-                    (error);
+            listener.@com.google.gwt.appengine.channel.client.SocketListener::onError(Lcom/google/gwt/appengine/channel/client/SocketError;)(error);
         };
         socket.onclose = function(event) {
-            listener.
-                    @com.google.gwt.appengine.channel.client.SocketListener::onClose()();
+            listener.@com.google.gwt.appengine.channel.client.SocketListener::onClose()();
         };
         return socket;
     }-*/;

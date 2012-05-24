@@ -1,17 +1,28 @@
+/*
+ * Copyright 2011 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package com.arcbees.concurrentrichtext.server.cache;
 
-import com.google.inject.Inject;
+import java.util.Collections;
 import javax.cache.Cache;
 import javax.cache.CacheException;
 import javax.cache.CacheFactory;
 import javax.cache.CacheManager;
 
-import java.util.Collections;
-
 public final class DiffSyncCache {
-
-    private static final String CACHE_NAME = "DiffSyncCache";
-
     public static String getCollabChannelKey(String channelKey) {
         return CACHE_NAME.concat("CollabChannel").concat(channelKey);
     }
@@ -32,9 +43,10 @@ public final class DiffSyncCache {
         return CACHE_NAME.concat("DiffSyncClient").concat(clientKey);
     }
 
+    private static final String CACHE_NAME = "DiffSyncCache";
+
     private Cache cache;
 
-    @Inject
     public DiffSyncCache() {
         try {
             CacheManager cacheManager = CacheManager.getInstance();
@@ -61,5 +73,4 @@ public final class DiffSyncCache {
     public boolean containsKey(Object key) {
         return cache.containsKey(key);
     }
-
 }

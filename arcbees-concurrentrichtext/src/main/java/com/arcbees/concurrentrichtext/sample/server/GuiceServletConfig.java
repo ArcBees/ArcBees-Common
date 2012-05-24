@@ -14,24 +14,17 @@
  * the License.
  */
 
-package com.arcbees.concurrentrichtext.server.diffsync;
+package com.arcbees.concurrentrichtext.sample.server;
 
-import com.arcbees.concurrentrichtext.shared.diffsync.ApplyEditsResult;
-import com.arcbees.concurrentrichtext.shared.diffsync.DocumentShadow;
-import com.arcbees.concurrentrichtext.shared.diffsync.Edits;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.servlet.GuiceServletContextListener;
 
-public interface DifferentialSync {
-    ApplyEditsResult applyEdits(Edits edits);
+import com.arcbees.concurrentrichtext.server.guice.ConcurrentRichTextModule;
 
-    Edits getEdits(String serverText);
-
-    DocumentShadow getDocumentShadow();
-
-    void initialize(String id, String baseText);
-
-    void restoreFromBackup();
-
-    boolean checkVersion(Edits edits);
-
-    void leave();
+public class GuiceServletConfig extends GuiceServletContextListener {
+    @Override
+    protected Injector getInjector() {
+        return Guice.createInjector(new ConcurrentRichTextModule(), new DispatchServletModule());
+    }
 }
