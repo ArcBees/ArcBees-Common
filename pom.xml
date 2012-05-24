@@ -24,16 +24,17 @@
         <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
 
         <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.6.1</gae.version>
+        <gae.version>1.6.5</gae.version>
         <gin.version>1.5.0</gin.version>
         <guice.version>3.0</guice.version>
         <gwt.version>2.4.0</gwt.version>
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
         <javax.version>1.0</javax.version>
         <jukito.version>1.1</jukito.version>
-        <junit.version>4.9</junit.version>
+        <junit.version>4.10</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <restlet.version>2.1-RC2</restlet.version>
     </properties>
@@ -92,6 +93,18 @@
             </roles>
             <timezone>-5</timezone>
         </developer>
+		<developer>
+            <id>maxime.meriouma</id>
+            <name>Maxime Meriouma-Caron</name>
+            <email>maxime.meriouma@arcbees.com</email>
+            <organization>ArcBees</organization>
+            <organizationUrl>http://www.arcbees.com</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>lead developer</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
     </developers>
 
     <issueManagement>
@@ -109,6 +122,7 @@
         <module>arcbees-facebook</module>
         <module>arcbees-core</module>
         <module>arcbees-guicyRestlet</module>
+		<module>arcbees-concurrentrichtext</module>
     </modules>
 
     <distributionManagement>

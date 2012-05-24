@@ -2,3 +2,5 @@
 .idea*
 arcbees-facebook/target*
 arcbees-core/target*
+arcbees-concurrentrichtext/target*
+arcbees-guicyRestlet/target*
