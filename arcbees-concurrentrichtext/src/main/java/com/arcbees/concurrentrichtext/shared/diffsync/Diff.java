@@ -47,23 +47,48 @@ public class Diff implements Serializable {
         this.text = text;
     }
 
+    @Override
+    public String toString() {
+        String prettyText = this.text.replace('\n', '\u00b6');
+        return "Diff(" + this.operation + ",\"" + prettyText + "\")";
+    }
+
     /**
      * Is this Diff equivalent to another Diff?
      *
      * @param d Another Diff to compare against.
      * @return true or false.
      */
-    public boolean equals(Object d) {
-        try {
-            return (((Diff) d).operation == this.operation)
-                   && (((Diff) d).text.equals(this.text));
-        } catch (ClassCastException e) {
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Diff other = (Diff) obj;
+        if (operation != other.operation) {
+            return false;
+        }
+        if (text == null) {
+            if (other.text != null) {
+                return false;
+            }
+        } else if (!text.equals(other.text)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public String toString() {
-        return operation.toString() + ": " + text;
+    public int hashCode() {
+        final int prime = 31;
+        int result = (operation == null) ? 0 : operation.hashCode();
+        result += prime * ((text == null) ? 0 : text.hashCode());
+        return result;
     }
 }

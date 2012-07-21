@@ -31,12 +31,7 @@ public class Patch {
         this.diffs = new LinkedList<Diff>();
     }
 
-    /**
-     * Emmulate GNU diff's format. Header: @@ -382,8 +481,9 @@ Indicies are
-     * printed as 1-based, not 0-based.
-     *
-     * @return The GNU diff string.
-     */
+    @Override
     public String toString() {
         String coords1, coords2;
         if (this.length1 == 0) {

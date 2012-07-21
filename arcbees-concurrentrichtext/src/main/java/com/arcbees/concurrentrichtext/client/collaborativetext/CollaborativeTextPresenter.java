@@ -171,7 +171,7 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
         boolean textChanged = false;
         ApplyEditsResultOffset applyResult = null;
 
-        getView().setEditable(false);
+//        getView().setEditable(false);
         CursorOffset cursor = getView().getCursorOffset();
         if (msgType.equals(SendEditsResult.ResultType.EDITS)) {
             SendEditsResultEdits editsMessage = (SendEditsResultEdits) message;
@@ -192,7 +192,7 @@ public class CollaborativeTextPresenter extends PresenterWidget<CollaborativeTex
             }
             getView().setCursorOffset(cursor);
         }
-        getView().setEditable(true);
+//        getView().setEditable(true);
     }
 
     private String makeRestoreMessageString(SendEditsResultRestore restoreMessage) {
