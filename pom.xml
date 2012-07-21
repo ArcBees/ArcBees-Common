@@ -101,7 +101,18 @@
             <organizationUrl>http://www.arcbees.com</organizationUrl>
             <roles>
                 <role>architect</role>
-                <role>lead developer</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+        <developer>
+            <id>vincent.roseberry</id>
+            <name>Vincent Roseberry</name>
+            <email>vincent.roseberry@arcbees.com</email>
+            <organization>ArcBees</organization>
+            <organizationUrl>http://www.arcbees.com</organizationUrl>
+            <roles>
+                <role>architect</role>
             </roles>
             <timezone>-5</timezone>
         </developer>
