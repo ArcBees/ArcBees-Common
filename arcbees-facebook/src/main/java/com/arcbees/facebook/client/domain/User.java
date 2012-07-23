@@ -31,12 +31,11 @@ public class User extends JavaScriptObject {
         return this.last_name;
     }-*/;
 
-    // TODO: Use an enum
     /**
      * The user's gender: female or male
      */
-    public final native String getGender() /*-{
-        return this.gender;
+    public final native Gender getGender() /*-{
+        return @com.arcbees.facebook.client.domain.Gender::getGender(Ljava/lang/String;)(this.gender);
     }-*/;
 
     public final native String getLocale() /*-{
@@ -79,7 +78,7 @@ public class User extends JavaScriptObject {
     }-*/;
 
     /**
-     * The last time the user's profile was updated; changes to the languages, link, timezone, verified, 
+     * The last time the user's profile was updated; changes to the languages, link, timezone, verified,
      * interested_in, favorite_athletes, favorite_teams, and video_upload_limits are not not reflected in this value
      */
     public final native String getUpdatedTime() /*-{
@@ -95,9 +94,7 @@ public class User extends JavaScriptObject {
     }-*/;
 
     public final Date getBirthday() {
-        Date date = new Date(Date.parse(getBirthdayRepresentation()));
-
-        return date;
+        return new Date(Date.parse(getBirthdayRepresentation()));
     }
 
     // TODO: Get the real object out of this structure.
@@ -129,13 +126,12 @@ public class User extends JavaScriptObject {
         return this.quotes;
     }-*/;
 
-    // TODO: Use an enum
     /**
      * The user's relationship status: Single, In a relationship, Engaged, Married, It's complicated,
      * In an open relationship, Widowed, Separated, Divorced, In a civil union, In a domestic partnership
      */
-    public final native String relationshipStatus() /*-{
-        return this.relationship_status;
+    public final native RelationshipStatus relationshipStatus() /*-{
+        return @com.arcbees.facebook.client.domain.RelationshipStatus::getRelationshipStatus(Ljava/lang/String;)(this.relationship_status);
     }-*/;
 
     public final native String getReligion() /*-{
@@ -158,8 +154,7 @@ public class User extends JavaScriptObject {
         return this.website;
     }-*/;
 
-    // TODO: Get the real object out of this structure.
-    public final native String getWork() /*-{
+    public final native Work[] getWork() /*-{
         return this.work;
     }-*/;
 
