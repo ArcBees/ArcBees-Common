@@ -2,16 +2,8 @@
 <module rename-to='paymentwepay'>
     <!-- Inherit the core Web Toolkit stuff.                        -->
     <inherits name='com.google.gwt.user.User'/>
-    <inherits name='com.google.gwt.inject.Inject'/>
 
     <!-- Other module inherits                                      -->
-    <inherits name="com.googlecode.objectify.Objectify"/>
-    <inherits name="com.arcbees.core.Mvp"/>
-    <inherits name="com.google.common.base.Base"/>
-    <inherits name="com.google.common.collect.Collect"/>
-    <inherits name="com.gwtplatform.dispatch.DispatchShared"/>
-    <inherits name="com.gwtplatform.dispatch.Dispatch"/>
-    <inherits name="com.google.web.bindery.autobean.AutoBean"/>
     <inherits name="com.google.gwt.json.JSON"/>
   
     <!-- Specify the paths for translatable code                    -->
