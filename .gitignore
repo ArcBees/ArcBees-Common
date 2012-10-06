@@ -1,4 +1,11 @@
 *.iml
 .idea*
-arcbees-facebook/target*
-arcbees-core/target*
+arcbees-facebook/target**
+arcbees-core/target**
+arcbees-payment/target**
+arcbees-guicyRestlet/target**
+.project
+.settings**
+.classpath
+arcbees-payment/src/main/webapp/WEB-INF/classes**
+arcbees-payment/src/main/webapp/WEB-INF/lib**
