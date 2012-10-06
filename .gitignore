@@ -9,3 +9,4 @@ arcbees-guicyRestlet/target**
 .classpath
 arcbees-payment/src/main/webapp/WEB-INF/classes**
 arcbees-payment/src/main/webapp/WEB-INF/lib**
+.gwt**
