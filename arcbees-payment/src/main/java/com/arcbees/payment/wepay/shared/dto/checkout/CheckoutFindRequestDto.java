@@ -6,41 +6,40 @@ package com.arcbees.payment.wepay.shared.dto.checkout;
 public class CheckoutFindRequestDto {
 
     /**
-     * The unique ID of the account whose checkouts you are searching.
-     * Is Required.
+     * The unique ID of the account whose checkouts you are searching. Is
+     * Required.
      */
     private int account_id;
-    
+
     /**
-     * The start position for your search (default 0).
-     * Is Optional.
+     * The start position for your search (default 0). Is Optional.
      */
-    private int start; 
-    
+    private int start;
+
     /**
-     * The maximum number of returned entries (default 50).
-     * Is Optional.
+     * The maximum number of returned entries (default 50). Is Optional.
      */
-    private int limit; 
-    
+    private int limit;
+
     /**
-     * The unique reference id of the checkout (set by the application in /checkout/create.
-     * Is Optional.
+     * The unique reference id of the checkout (set by the application in
+     * /checkout/create. Is Optional.
      */
-    private String reference_id;    
-            
+    private String reference_id;
+
     /**
-     * What state the checkout is in (see the API object state reference for details).
-     * Is Optional.         
+     * What state the checkout is in (see the API object state reference for
+     * details). Is Optional.
      */
-    private String state; 
-    
+    private String state;
+
     /**
-     * The ID of the preapproval that was used to create the checkout. Useful if you want to look up all of the payments for an auto_recurring preapproval.
-     * Is Optional.
+     * The ID of the preapproval that was used to create the checkout. Useful if
+     * you want to look up all of the payments for an auto_recurring
+     * preapproval. Is Optional.
      */
     private int preapproval_id;
-    
+
     public CheckoutFindRequestDto() {
     }
 
@@ -91,5 +90,5 @@ public class CheckoutFindRequestDto {
     public void setPreapproval_id(int preapproval_id) {
         this.preapproval_id = preapproval_id;
     }
-    
+
 }

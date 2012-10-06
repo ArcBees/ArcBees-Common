@@ -8,118 +8,134 @@ public class CheckoutResponseDto {
     /**
      * The unique ID of the checkout.
      */
-    private int checkout_id; 
-    
+    private int checkout_id;
+
     /**
      * The unique ID of the account that the money will go into.
      */
     private int account_id;
-    
+
     /**
-     * The state the checkout is in. See the API object state section for a listing of all states.
+     * The state the checkout is in. See the API object state section for a
+     * listing of all states.
      */
-    private String state;   
-    
+    private String state;
+
     /**
      * The short description of the checkout. Max 127 chars.
      */
-    private String short_description;   
-    
+    private String short_description;
+
     /**
      * The long description of the checkout (if available). Max 2047 chars.
      */
     private String long_description;
-    
+
     /**
      * The currency used (always "USD" for now).
      */
-    private String currency;    
-    
+    private String currency;
+
     /**
-     * The dollar amount of the checkout object (ex. 3.20). This will always be the amount you passed in /checkout/create.
+     * The dollar amount of the checkout object (ex. 3.20). This will always be
+     * the amount you passed in /checkout/create.
      */
     private Double amount;
-    
+
     /**
      * The dollar amount of the WePay fee.
      */
-    private Double fee; 
-    
+    private Double fee;
+
     /**
      * The total dollar amount paid by the payer.
      */
     private Double gross;
-    
+
     /**
-     * The dollar amount that the application received in fees. App fees go into the API application's WePay account.
+     * The dollar amount that the application received in fees. App fees go into
+     * the API application's WePay account.
      */
     private Double app_fee;
-    
+
     /**
-     * Who is paying the fee (either "payer" for the person paying or "payee" for the person receiving the money).
+     * Who is paying the fee (either "payer" for the person paying or "payee"
+     * for the person receiving the money).
      */
-    private String fee_payer;   
-    
+    private String fee_payer;
+
     /**
      * The unique reference_id passed by the application (if available).
      */
     private String reference_id;
-    
+
     /**
-     * The uri the payer will be redirected to after payment (if available). Max 2083 chars.
+     * The uri the payer will be redirected to after payment (if available). Max
+     * 2083 chars.
      */
     private String redirect_uri;
-    
+
     /**
-     * The uri which instant payment notifications will be sent to. Max 2083 chars.
+     * The uri which instant payment notifications will be sent to. Max 2083
+     * chars.
      */
     private String callback_uri;
-    
+
     /**
-     * The email address of the person paying (only returned if a payment has been made).
+     * The email address of the person paying (only returned if a payment has
+     * been made).
      */
     private String payer_email;
-    
+
     /**
      * The name of the person paying (only returned if a payment has been made).
      */
     private String payer_name;
-    
+
     /**
      * If the payment was canceled, the reason why.
      */
-    private String cancel_reason;   
-    
+    private String cancel_reason;
+
     /**
      * If the payment was refunded the reason why.
      */
     private String refund_reason;
-    
+
     /**
-     * Default is true. If set to false then the payment will not automatically be released to the account and will be held by WePay in payment state 'reserved'. To release funds to the account you must call /checkout/capture 
+     * Default is true. If set to false then the payment will not automatically
+     * be released to the account and will be held by WePay in payment state
+     * 'reserved'. To release funds to the account you must call
+     * /checkout/capture
      */
     private Boolean auto_capture;
-    
+
     /**
-     * Default is false. If set to true then the payer will be required to enter their shipping address when paying. 
+     * Default is false. If set to true then the payer will be required to enter
+     * their shipping address when paying.
      */
-    private Boolean require_shipping;    
-    
+    private Boolean require_shipping;
+
     /**
-     * If 'require_shipping' was set to true and the payment was made, this will be the shipping address that the payer entered. It will be in the following format: {"address1":"380 Portage Ave","address2":"","city":"Palo Alto","state":"CA","zip":"94306","country":"US"} 
+     * If 'require_shipping' was set to true and the payment was made, this will
+     * be the shipping address that the payer entered. It will be in the
+     * following format:
+     * {"address1":"380 Portage Ave","address2":"","city":"Palo Alto"
+     * ,"state":"CA","zip":"94306","country":"US"}
      */
-    private Object shipping_address;    
-    
+    private Object shipping_address;
+
     /**
      * The dollar amount of taxes paid.
      */
     private Double tax;
-    
+
     /**
-     * If this checkout has been fully or partially refunded, this has the amount that has been refunded so far. 
+     * If this checkout has been fully or partially refunded, this has the
+     * amount that has been refunded so far.
      */
     private Double amount_refunded;
-    
+
     /**
      * The unixtime when the checkout was created.
      */
@@ -319,5 +335,5 @@ public class CheckoutResponseDto {
     public void setCreate_time(int create_time) {
         this.create_time = create_time;
     }
-    
+
 }
