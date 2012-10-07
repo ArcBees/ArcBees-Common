@@ -15,5 +15,125 @@
     <artifactId>arcbees-payment</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
+    <properties>
+      <objectify.version>4.0a3</objectify.version>
+      <restfb.version>1.6.9</restfb.version>
+      <apache-commons-lang3.version>3.0.1</apache-commons-lang3.version>
+      <persistence-api.version>1.0.2</persistence-api.version>
+      <gwtp.version>0.8-SNAPSHOT</gwtp.version>
+      <arcbees.version>1.0-SNAPSHOT</arcbees.version>
+      <guava-version>11.0.1</guava-version>
+    </properties>
   
+    <repositories>
+        <repository>
+            <id>sonatype.snapshots</id>
+            <name>Sonatype snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven-apache-snapshots</id>
+            <name>Apache snapshots</name>
+            <url>http://repository.apache.org/snapshots</url>
+        </repository>
+        <repository>
+            <id>objectify-appengine</id>
+            <url>http://objectify-appengine.googlecode.com/svn/maven</url>
+        </repository>
+        <repository>
+            <id>maven-restlet</id>
+            <name>Public online Restlet repository</name>
+            <url>http://maven.restlet.org</url>
+        </repository>
+        <repository>
+            <id>BranflakeMavenRepo-snapshots</id>
+            <url>https://github.com/branflake2267/BranflakeMavenRepo/raw/master/snapshots</url>
+        </repository>
+        <repository>
+            <id>google-api-services</id>
+            <url>http://mavenrepo.google-api-java-client.googlecode.com/hg</url>
+        </repository>
+        <repository>
+            <id>Arcbees-snapshots</id>
+            <url>http://ci.arcbees.com:8081/nexus/content/repositories/thirdparty/</url>
+        </repository>
+    </repositories>
+    
+    <!-- Persistence dependencies -->
+    <dependencies>
+      <dependency>
+          <groupId>javax.persistence</groupId>
+          <artifactId>persistence-api</artifactId>
+          <version>${persistence-api.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.googlecode.objectify</groupId>
+          <artifactId>objectify</artifactId>
+          <version>${objectify.version}</version>
+      </dependency>
+      
+      <!--ArcBees dependencies -->
+      <dependency>
+          <groupId>com.arcbees.core</groupId>
+          <artifactId>arcbees-core</artifactId>
+          <version>${arcbees.version}</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.gwtplatform</groupId>
+          <artifactId>gwtp-mvp-client</artifactId>
+          <version>${gwtp.version}</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.gwtplatform</groupId>
+          <artifactId>gwtp-dispatch-client</artifactId>
+          <version>${gwtp.version}</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.gwtplatform</groupId>
+          <artifactId>gwtp-dispatch-server-guice</artifactId>
+          <version>${gwtp.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.gwtplatform</groupId>
+          <artifactId>gwtp-dispatch-shared</artifactId>
+          <version>${gwtp.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.gwtplatform</groupId>
+          <artifactId>gwtp-processors</artifactId>
+          <version>${gwtp.version}</version>
+          <scope>provided</scope>
+      </dependency>
+      
+      <!-- RestFB -->
+      <dependency>
+          <groupId>com.restfb</groupId>
+          <artifactId>restfb</artifactId>
+          <version>${restfb.version}</version>
+      </dependency>
+  
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>${apache-commons-lang3.version}</version>
+      </dependency>
+      <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+    </dependencies>
+    
 </project>
