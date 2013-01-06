@@ -1,4 +1,9 @@
 *.iml
 .idea*
-arcbees-facebook/target*
-arcbees-core/target*
+**target**
+.project
+.settings**
+.classpath
+.gwt**
+**.gwt-log**
+.DS_Store

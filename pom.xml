@@ -120,6 +120,7 @@
         <module>arcbees-facebook</module>
         <module>arcbees-core</module>
         <module>arcbees-guicyRestlet</module>
+        <module>arcbees-appengine</module>
     </modules>
 
     <distributionManagement>
