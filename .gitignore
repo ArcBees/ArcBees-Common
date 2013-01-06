@@ -4,3 +4,6 @@
 .project
 .settings**
 .classpath
+.gwt**
+**.gwt-log**
+.DS_Store
