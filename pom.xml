@@ -26,8 +26,8 @@
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 
         <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.6.1</gae.version>
-        <gin.version>1.5.0</gin.version>
+        <gae.version>1.7.2</gae.version>
+        <gin.version>2.0.0</gin.version>
         <guice.version>3.0</guice.version>
         <gwt.version>2.4.0</gwt.version>
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
@@ -120,6 +120,7 @@
         <module>arcbees-facebook</module>
         <module>arcbees-core</module>
         <module>arcbees-guicyRestlet</module>
+        <module>arcbees-payment</module>
     </modules>
 
     <distributionManagement>
