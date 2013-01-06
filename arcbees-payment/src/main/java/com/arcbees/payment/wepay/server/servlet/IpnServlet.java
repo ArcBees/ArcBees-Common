@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.inject.Inject;
 
 public class IpnServlet extends HttpServlet {
-
     private final Logger logger;
     
     private Map<String, String[]> map;
@@ -53,6 +52,5 @@ public class IpnServlet extends HttpServlet {
             }
         }
         return s;
-    }
-    
+    }    
 }

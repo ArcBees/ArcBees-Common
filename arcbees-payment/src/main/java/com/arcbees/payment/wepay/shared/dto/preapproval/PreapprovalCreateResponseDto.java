@@ -1,7 +1,6 @@
 package com.arcbees.payment.wepay.shared.dto.preapproval;
 
 public class PreapprovalCreateResponseDto {
-
     /**
      * The unique ID of the pre-approval.
      */
@@ -29,6 +28,5 @@ public class PreapprovalCreateResponseDto {
 
     public void setPreapproval_uri(String preapproval_uri) {
         this.preapproval_uri = preapproval_uri;
-    }
-    
+    }    
 }

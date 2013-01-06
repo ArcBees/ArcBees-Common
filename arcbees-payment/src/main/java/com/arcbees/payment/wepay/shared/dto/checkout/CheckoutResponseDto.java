@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.checkout;
  * https://www.wepay.com/developer/reference/checkout
  */
 public class CheckoutResponseDto {
-
     /**
      * The unique ID of the checkout.
      */
@@ -335,5 +334,4 @@ public class CheckoutResponseDto {
     public void setCreate_time(int create_time) {
         this.create_time = create_time;
     }
-
 }

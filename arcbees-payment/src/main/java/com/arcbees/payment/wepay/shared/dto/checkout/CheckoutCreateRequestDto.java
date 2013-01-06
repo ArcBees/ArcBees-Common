@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.checkout;
  * https://www.wepay.com/developer/reference/checkout
  */
 public class CheckoutCreateRequestDto {
-
     /**
      * The unique ID of the account you want to create a checkout for. Is
      * Required.
@@ -328,5 +327,4 @@ public class CheckoutCreateRequestDto {
     public void setPayment_method_type(String payment_method_type) {
         this.payment_method_type = payment_method_type;
     }
-
 }

@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.preapproval;
  * https://www.wepay.com/developer/reference/preapproval
  */
 public class PreapprovalCreateRequestDto {
-
     /**
      * The WePay account where the money will go when you use this pre-approval
      * to execute a payment. Is Required.
@@ -325,5 +324,4 @@ public class PreapprovalCreateRequestDto {
     public void setFunding_sources(String funding_sources) {
         this.funding_sources = funding_sources;
     }
-
 }

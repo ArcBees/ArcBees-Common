@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.preapproval;
  * https://www.wepay.com/developer/reference/preapproval
  */
 public class PreapprovalRequestDto {
-
     /**
      * The unique ID of the preapproval you want to look up. Is Required.
      */
@@ -17,5 +16,4 @@ public class PreapprovalRequestDto {
     public int getPreapprovalId() {
         return preapproval_id;
     }
-
 }

@@ -1,7 +1,6 @@
 package com.arcbees.payment.wepay.shared.dto.preapproval;
 
 public class PreapprovalCancelResponseDto {
-
     /**
      * The unique ID of the pre-approval.
      */
@@ -29,6 +28,5 @@ public class PreapprovalCancelResponseDto {
 
     public void setState(String state) {
         this.state = state;
-    }
-    
+    }    
 }

@@ -1,7 +1,6 @@
 package com.arcbees.payment.wepay.shared.dto.preapproval;
 
 public class PreapprovalModifyRequestDto {
-
     /**
      * The unique ID of the preapproval you want to modify. Is Required.
      */
@@ -31,6 +30,5 @@ public class PreapprovalModifyRequestDto {
 
     public void setCallback_uri(String callback_uri) {
         this.callback_uri = callback_uri;
-    }
-    
+    }    
 }

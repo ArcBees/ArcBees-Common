@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.preapproval;
  * https://www.wepay.com/developer/reference/preapproval
  */
 public class PreapprovalFindRequestDto {
-
     /**
      * The state of the pre-approval you are searching for. Is Optional.
      */
@@ -34,5 +33,4 @@ public class PreapprovalFindRequestDto {
     public void setReference_id(String reference_id) {
         this.reference_id = reference_id;
     }
-
 }

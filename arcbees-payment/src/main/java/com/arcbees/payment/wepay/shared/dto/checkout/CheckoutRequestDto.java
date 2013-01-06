@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.checkout;
  * https://www.wepay.com/developer/reference/checkout
  */
 public class CheckoutRequestDto {
-
     /**
      * The unique ID of the checkout you want to look up. Is Required.
      */
@@ -20,5 +19,4 @@ public class CheckoutRequestDto {
     public void setCheckout_id(int checkout_id) {
         this.checkout_id = checkout_id;
     }
-
 }

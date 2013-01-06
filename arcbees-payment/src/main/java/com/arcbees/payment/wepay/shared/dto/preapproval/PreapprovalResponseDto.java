@@ -1,7 +1,6 @@
 package com.arcbees.payment.wepay.shared.dto.preapproval;
 
 public class PreapprovalResponseDto {
-
     /**
      * The unique ID of the pre-approval.
      */
@@ -342,5 +341,4 @@ public class PreapprovalResponseDto {
     public void setCreate_time(int create_time) {
         this.create_time = create_time;
     }
-
 }

@@ -1,7 +1,6 @@
 package com.arcbees.payment.wepay.shared.dto.preapproval;
 
 public class PreapprovalCancelRequestDto {
-
     /**
      * The unique ID of the pre-approval you want to cancel. Is Required.
      */
@@ -16,6 +15,5 @@ public class PreapprovalCancelRequestDto {
 
     public void setPreapproval_id(int preapproval_id) {
         this.preapproval_id = preapproval_id;
-    }
-        
+    }   
 }

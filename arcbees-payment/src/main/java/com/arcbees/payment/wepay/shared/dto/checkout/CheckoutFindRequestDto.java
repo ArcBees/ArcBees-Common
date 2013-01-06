@@ -4,7 +4,6 @@ package com.arcbees.payment.wepay.shared.dto.checkout;
  * https://www.wepay.com/developer/reference/checkout
  */
 public class CheckoutFindRequestDto {
-
     /**
      * The unique ID of the account whose checkouts you are searching. Is
      * Required.
@@ -90,5 +89,4 @@ public class CheckoutFindRequestDto {
     public void setPreapproval_id(int preapproval_id) {
         this.preapproval_id = preapproval_id;
     }
-
 }

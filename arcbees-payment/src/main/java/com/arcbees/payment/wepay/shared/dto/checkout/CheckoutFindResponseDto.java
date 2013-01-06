@@ -6,7 +6,6 @@ import java.util.List;
  * https://www.wepay.com/developer/reference/checkout
  */
 public class CheckoutFindResponseDto {
-
     private List<CheckoutFindRequestDto> checkouts;
     
     public CheckoutFindResponseDto() {
@@ -19,5 +18,4 @@ public class CheckoutFindResponseDto {
     public void setCheckouts(List<CheckoutFindRequestDto> checkouts) {
         this.checkouts = checkouts;
     }
-    
 }

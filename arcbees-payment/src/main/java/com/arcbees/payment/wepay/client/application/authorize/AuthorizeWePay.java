@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AuthorizeWePay extends Composite {
-
     private static AuthorizePopupUiBinder uiBinder = GWT.create(AuthorizePopupUiBinder.class);
 
     public interface AuthorizePopupUiBinder extends UiBinder<Widget, AuthorizeWePay> {
@@ -26,5 +25,4 @@ public class AuthorizeWePay extends Composite {
                 + redirect_uri + "&scope=" + scope;
         frame.setUrl(url);
     }
-
 }
