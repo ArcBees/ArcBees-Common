@@ -123,7 +123,7 @@ public class Description implements Serializable {
         // BEGIN MODIFICATION
         if (testClass == null)
             return new Description(null, "****");
-        // ENDLocalizedXStreams MODIFICATION
+        // END MODIFICATION
         return new Description(testClass, testClass.getName(), testClass.getAnnotations());
     }
 
