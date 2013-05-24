@@ -24,6 +24,7 @@ import com.gwtplatform.mvp.client.UiHandlers;
  *
  * @param <H> {@link com.gwtplatform.mvp.client.UiHandlers}'s type.
  */
+@Deprecated
 public interface UiHandlersStrategy<H extends UiHandlers> {
     /**
      * This method let you set a ui handlers manually.

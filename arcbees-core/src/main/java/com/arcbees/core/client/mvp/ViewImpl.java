@@ -16,6 +16,7 @@
 
 package com.arcbees.core.client.mvp;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.View;
 
@@ -24,22 +25,23 @@ import com.gwtplatform.mvp.client.View;
  * {@link com.gwtplatform.mvp.client.ViewImpl} that add a {@link com.google.gwt.user.client.ui.Composite} like
  * behavior by letting us assigning a widget to the view.
  * <p/>
- * <b>Important</b> call {@link #initWidget(com.google.gwt.user.client.ui.Widget)} in your {@link com.gwtplatform.mvp.client.View}'s
+ * <b>Important</b> call {@link #initWidget(com.google.gwt.user.client.ui.Widget)} in your {@link com.gwtplatform.mvp
+ * .client.View}'s
  * constructor.
  */
 public abstract class ViewImpl implements View {
     private Widget widget;
 
     @Override
-    public void addToSlot(Object slot, Widget content) {
+    public void addToSlot(Object slot, IsWidget content) {
     }
 
     @Override
-    public void removeFromSlot(Object slot, Widget content) {
+    public void removeFromSlot(Object slot, IsWidget content) {
     }
 
     @Override
-    public void setInSlot(Object slot, Widget content) {
+    public void setInSlot(Object slot, IsWidget content) {
     }
 
     @Override

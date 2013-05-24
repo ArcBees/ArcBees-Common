@@ -20,6 +20,7 @@ import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.UiHandlers;
 
+@Deprecated
 public abstract class PopupViewWithUiHandlers<H extends UiHandlers> extends PopupViewImpl implements UiHandlersStrategy<H> {
     private UiHandlersStrategy<H> uiHandlersStrategy;
 

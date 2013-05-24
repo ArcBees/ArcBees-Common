@@ -27,6 +27,7 @@ import com.gwtplatform.mvp.client.UiHandlers;
  *
  * @param <H> {@link com.gwtplatform.mvp.client.UiHandlers}'s type.
  */
+@Deprecated
 public class ProviderUiHandlersStrategy<H extends UiHandlers> implements UiHandlersStrategy<H> {
     private final Provider<H> uiHandlersProvider;
 

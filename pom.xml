@@ -26,15 +26,15 @@
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 
         <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.6.1</gae.version>
-        <gin.version>1.5.0</gin.version>
+        <gae.version>1.8.0</gae.version>
+        <gin.version>2.0.0</gin.version>
         <guice.version>3.0</guice.version>
-        <gwt.version>2.4.0</gwt.version>
-        <gwtp.version>0.8-SNAPSHOT</gwtp.version>
+        <gwt.version>2.5.1</gwt.version>
+        <gwtp.version>1.0-RC-3</gwtp.version>
         <javax.version>1.0</javax.version>
-        <jukito.version>1.1</jukito.version>
-        <junit.version>4.9</junit.version>
-        <mockito.version>1.9.0</mockito.version>
+        <jukito.version>1.1.2</jukito.version>
+        <junit.version>4.11</junit.version>
+        <mockito.version>1.9.5</mockito.version>
         <restlet.version>2.1-RC2</restlet.version>
     </properties>
 
@@ -120,6 +120,7 @@
         <module>arcbees-facebook</module>
         <module>arcbees-core</module>
         <module>arcbees-guicyRestlet</module>
+        <module>arcbees-testUtils</module>
     </modules>
 
     <distributionManagement>

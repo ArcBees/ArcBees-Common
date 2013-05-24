@@ -31,6 +31,7 @@ import com.gwtplatform.mvp.client.UiHandlers;
  *
  * @param <H> {@link com.gwtplatform.mvp.client.UiHandlers}'s type.
  */
+@Deprecated
 public abstract class ViewWithUiHandlers<H extends UiHandlers> extends ViewImpl
         implements UiHandlersStrategy<H> {
     private UiHandlersStrategy<H> uiHandlersStrategy;
