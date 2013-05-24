@@ -31,7 +31,7 @@ public class WebDriverProvider implements Provider<WebDriver> {
 
     @Inject
     WebDriverProvider(ParameterHolder parameterHolder) {
-        this.implicitWait = parameterHolder.implicityWait;
+        this.implicitWait = parameterHolder.implicitWait;
     }
 
     @Override
@@ -50,6 +50,6 @@ public class WebDriverProvider implements Provider<WebDriver> {
     static class ParameterHolder {
         @Inject(optional = true)
         @ImplicitWait
-        Long implicityWait = 0L;
+        Long implicitWait = 0L;
     }
 }
