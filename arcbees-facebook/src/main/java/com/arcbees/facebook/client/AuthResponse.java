@@ -30,11 +30,11 @@ public class AuthResponse extends JavaScriptObject {
     }
   }-*/;
 
-  public final native String getExpiresIn() /*-{
+  public final native Integer getExpiresIn() /*-{
     if (this.authResponse) {
       return this.authResponse.expiresIn;
     } else {
-      return "";
+      return 0;
     }    
   }-*/;
 
