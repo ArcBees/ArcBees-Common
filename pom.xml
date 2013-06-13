@@ -119,7 +119,6 @@
     <modules>
         <module>arcbees-facebook</module>
         <module>arcbees-guicyRestlet</module>
-        <module>arcbees-addthis</module>
     </modules>
 
     <distributionManagement>
