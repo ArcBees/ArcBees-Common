@@ -1,8 +1,6 @@
-GWT AddThis Widget
-==============
+#GWT AddThis Widget
 
-Dependencies
-------------
+##Dependencies
 - Include this Maven Dependency (OSS sonatype)
 
 
@@ -12,8 +10,7 @@ Dependencies
 <inherits name="com.arcbees.addthis"/>
 ```
 
-Install in your application
----------------------------
+##Install in your application
 
 To put in your Gin Module :
 ```java
@@ -21,8 +18,8 @@ install(new AddThisModule());
 bindConstant().annotatedWith(AddThisPubId.class).to("YOUR_ADDTHIS_PUBID");
 ```
 
-Usage
------
+##Usage
+
 Create an object AddThisFactory
 ```java
 AddThisFactory addThisFactory;
