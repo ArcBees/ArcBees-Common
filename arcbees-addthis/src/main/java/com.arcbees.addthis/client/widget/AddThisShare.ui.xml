@@ -1,0 +1,19 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .root {
+            display: inline-block;
+            text-align: center;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.root}">
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style" ui:field="toolbox">
+            <a class="addthis_button_facebook"/>
+            <a class="addthis_button_twitter"/>
+            <a class="addthis_button_compact"/>
+            <a class="addthis_counter addthis_bubble_style" ui:field="counter"/>
+        </div>
+    </g:HTMLPanel>
+
+</ui:UiBinder>
