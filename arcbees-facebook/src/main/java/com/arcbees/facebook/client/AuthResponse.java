@@ -28,33 +28,41 @@ public class AuthResponse extends JavaScriptObject {
     } else {
       return "";
     }
-  }-*/;
+  }-*/; 
 
   public final native Integer getExpiresIn() /*-{
     if (this.authResponse) {
       return this.authResponse.expiresIn;
     } else {
       return 0;
-    }    
-  }-*/;
+    }
+  }-*/; 
 
   public final native String getSignedRequest() /*-{
     if (this.authResponse) {
       return this.authResponse.signedRequest;
     } else {
       return "";
-    }    
-  }-*/;
+    }
+  }-*/; 
 
   public final native String getUserId() /*-{
     if (this.authResponse) {
       return this.authResponse.userID;
     } else {
       return "";
-    }    
-  }-*/;
+    }
+  }-*/; 
 
   public final native Status getStatus() /*-{
     return @com.arcbees.facebook.client.Status::valueOf(Lcom/google/gwt/core/client/JavaScriptObject;)(this);
-  }-*/;
+  }-*/; 
+
+    public final native String getEmail() /*-{
+        if (this.authResponse) {
+            return this.authResponse.email;
+        } else {
+            return "";
+        }
+    }-*/; 
 }
