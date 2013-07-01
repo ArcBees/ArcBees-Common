@@ -11,7 +11,7 @@
     <name>ArcBees</name>
     <inceptionYear>2011</inceptionYear>
     <description>Ruby on rails for Gwt.</description>
-    <url>https://github.com/ArcBees/ArcBees-Infrastructure</url>
+    <url>https://github.com/ArcBees/ArcBees-Common</url>
 
     <properties>
         <target.jdk>1.6</target.jdk>
