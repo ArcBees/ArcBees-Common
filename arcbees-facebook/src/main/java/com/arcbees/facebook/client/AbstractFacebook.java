@@ -24,7 +24,7 @@ public abstract class AbstractFacebook implements Facebook {
         var instance = this;
 
         $wnd.FB.getLoginStatus(function (response) {
-            instance.@com.arcbees.facebook.client.AbstractFacebook::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+            $entry(instance.@com.arcbees.facebook.client.AbstractFacebook::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response));
         });
     }-*/;
 
@@ -36,9 +36,9 @@ public abstract class AbstractFacebook implements Facebook {
         $wnd.FB.login(
             function (response) {
                 if (response.status == @com.arcbees.facebook.client.Status::Connected) {
-                    instance.@com.arcbees.facebook.client.AbstractFacebook::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+                    $entry(instance.@com.arcbees.facebook.client.AbstractFacebook::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response));
                 } else {
-                    instance.@com.arcbees.facebook.client.AbstractFacebook::callbackFailure(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+                    $entry(instance.@com.arcbees.facebook.client.AbstractFacebook::callbackFailure(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response));
                 }
             }, {
                 scope: scopeValue
@@ -50,7 +50,7 @@ public abstract class AbstractFacebook implements Facebook {
         var instance = this;
 
         $wnd.FB.logout(function (response) {
-            instance.@com.arcbees.facebook.client.AbstractFacebook::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);;
+            $entry(instance.@com.arcbees.facebook.client.AbstractFacebook::callbackSuccess(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response));
         });
     }-*/;
 
