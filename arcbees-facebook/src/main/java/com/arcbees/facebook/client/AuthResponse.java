@@ -48,7 +48,11 @@ public class AuthResponse extends JavaScriptObject {
 
   public final native String getUserId() /*-{
     if (this.authResponse) {
-      return this.authResponse.userID;
+        if (this.authResponse.userID == null) {
+            return this.authResponse.userId;
+        } else {
+            return this.authResponse.userID;
+        }
     } else {
       return "";
     }    
