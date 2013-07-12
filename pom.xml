@@ -19,14 +19,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <gwt-maven-plugin.version>2.5.1</gwt-maven-plugin.version>
-        <maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
-        <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
-        <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+        <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+        <maven-processor-plugin.version>2.2.4</maven-processor-plugin.version>
+        <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.15</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
 
         <aopalliance.version>1.0</aopalliance.version>
-        <gae.version>1.8.0</gae.version>
+        <gae.version>1.8.1.1</gae.version>
         <gin.version>2.0.0</gin.version>
         <guice.version>3.0</guice.version>
         <gwt.version>2.5.1</gwt.version>
@@ -119,7 +119,7 @@
     <modules>
         <module>arcbees-facebook</module>
         <module>arcbees-guicyRestlet</module>
-        <module>arcbees-testUtils</module>
+        <module>arcbees-testutils</module>
     </modules>
 
     <distributionManagement>
