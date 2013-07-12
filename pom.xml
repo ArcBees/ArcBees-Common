@@ -11,14 +11,14 @@
     <name>ArcBees</name>
     <inceptionYear>2011</inceptionYear>
     <description>Ruby on rails for Gwt.</description>
-    <url>https://github.com/ArcBees/ArcBees-Infrastructure</url>
+    <url>https://github.com/ArcBees/ArcBees-Common</url>
 
     <properties>
         <target.jdk>1.6</target.jdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
+        <gwt-maven-plugin.version>2.5.1</gwt-maven-plugin.version>
         <maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
         <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
         <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
