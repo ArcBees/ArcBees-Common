@@ -31,7 +31,7 @@
         <guice.version>3.0</guice.version>
         <gwt.version>2.5.1</gwt.version>
         <gwtp.version>1.0</gwtp.version>
-        <javax.version>1.0</javax.version>
+        <javax.version>1.0.2</javax.version>
         <jukito.version>1.2</jukito.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>
@@ -120,6 +120,7 @@
         <module>arcbees-facebook</module>
         <module>arcbees-guicyRestlet</module>
         <module>arcbees-testutils</module>
+        <module>guicy-resteasy</module>
     </modules>
 
     <distributionManagement>
@@ -148,245 +149,249 @@
         </repository>
     </repositories>
 
-    <dependencies>
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
+    <dependencyManagement>
+        <dependencies>
+            <!-- Google Web Toolkit dependencies -->
+            <dependency>
+                <groupId>com.google.gwt</groupId>
+                <artifactId>gwt-user</artifactId>
+                <version>${gwt.version}</version>
+                <scope>provided</scope>
 
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>${gwt.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+            </dependency>
+            <dependency>
+                <groupId>com.google.gwt</groupId>
+                <artifactId>gwt-servlet</artifactId>
+                <version>${gwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
 
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${gae.version}</version>
-        </dependency>
+            <!-- Google Web Toolkit dependencies -->
+            <dependency>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-api-1.0-sdk</artifactId>
+                <version>${gae.version}</version>
+            </dependency>
 
-        <!-- GWT-Platform dependencies -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-mvp-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
+            <!-- GWT-Platform dependencies -->
+            <dependency>
+                <groupId>com.gwtplatform</groupId>
+                <artifactId>gwtp-mvp-client</artifactId>
+                <version>${gwtp.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>com.gwtplatform</groupId>
+                <artifactId>gwtp-dispatch-client</artifactId>
+                <version>${gwtp.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-server-guice</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.gwtplatform</groupId>
+                <artifactId>gwtp-dispatch-server-guice</artifactId>
+                <version>${gwtp.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-shared</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.gwtplatform</groupId>
+                <artifactId>gwtp-dispatch-shared</artifactId>
+                <version>${gwtp.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-processors</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>com.gwtplatform</groupId>
+                <artifactId>gwtp-processors</artifactId>
+                <version>${gwtp.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
-        <!-- DI dependencies -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
+            <!-- DI dependencies -->
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-servlet</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-assistedinject</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.google.gwt.inject</groupId>
-            <artifactId>gin</artifactId>
-            <version>${gin.version}</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>com.google.gwt.inject</groupId>
+                <artifactId>gin</artifactId>
+                <version>${gin.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
+            <!-- Test dependencies -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
 
-        <dependency>
-            <groupId>org.jukito</groupId>
-            <artifactId>jukito</artifactId>
-            <version>${jukito.version}</version>
-            <scope>test</scope>
-        </dependency>
+            <dependency>
+                <groupId>org.jukito</groupId>
+                <artifactId>jukito</artifactId>
+                <version>${jukito.version}</version>
+                <scope>test</scope>
+            </dependency>
 
-        <!-- Javax -->
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>${javax.version}</version>
-        </dependency>
+            <!-- Javax -->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${javax.version}</version>
+            </dependency>
 
-        <!-- Restlet -->
-        <dependency>
-            <groupId>org.restlet.gae</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
+            <!-- Restlet -->
+            <dependency>
+                <groupId>org.restlet.gae</groupId>
+                <artifactId>org.restlet</artifactId>
+                <version>${restlet.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.restlet.gae</groupId>
-            <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-    </dependencies>
+            <dependency>
+                <groupId>org.restlet.gae</groupId>
+                <artifactId>org.restlet.ext.servlet</artifactId>
+                <version>${restlet.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt-maven-plugin.version}</version>
-                <configuration>
-                    <appEngineVersion>${gae.version}</appEngineVersion>
-                    <appEngineHome>${gae.home}</appEngineHome>
-                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>gwt-maven-plugin</artifactId>
+                    <version>${gwt-maven-plugin.version}</version>
+                    <configuration>
+                        <appEngineVersion>${gae.version}</appEngineVersion>
+                        <appEngineHome>${gae.home}</appEngineHome>
+                        <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 
-                    <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <runTarget>gulo.html</runTarget>
+                        <hostedWebapp>${webappDirectory}</hostedWebapp>
+                        <runTarget>gulo.html</runTarget>
 
-                    <testTimeOut>180</testTimeOut>
-                    <extraJvmArgs>-Xmx512m -Xss2M</extraJvmArgs>
+                        <testTimeOut>180</testTimeOut>
+                        <extraJvmArgs>-Xmx512m -Xss2M</extraJvmArgs>
 
-                    <compileReport>true</compileReport>
+                        <compileReport>true</compileReport>
 
-                    <!-- UNCOMMENT THESE TO TURN ON INTERNATIONALIZATION
-                    <i18nConstantsBundles>
-                        <i18nConstantsBundle>com.arcbees.guloent.MyConstants</i18nConstantsBundle>
-                    </i18nConstantsBundles>
-                    <i18nMessagesBundles>
-                        <i18nMessagesBundle>com.arcbees.guloent.MyMessages</i18nMessagesBundle>
-                    </i18nMessagesBundles>
-                    -->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <!-- UNCOMMENT THIS TO TURN ON INTERNATIONALIZATION
-                            <goal>i18n</goal>
-                            -->
-                            <goal>resources</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>prepare-package</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+                        <!-- UNCOMMENT THESE TO TURN ON INTERNATIONALIZATION
+                        <i18nConstantsBundles>
+                            <i18nConstantsBundle>com.arcbees.guloent.MyConstants</i18nConstantsBundle>
+                        </i18nConstantsBundles>
+                        <i18nMessagesBundles>
+                            <i18nMessagesBundle>com.arcbees.guloent.MyMessages</i18nMessagesBundle>
+                        </i18nMessagesBundles>
+                        -->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>generate-sources</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <!-- UNCOMMENT THIS TO TURN ON INTERNATIONALIZATION
+                                <goal>i18n</goal>
+                                -->
+                                <goal>resources</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>prepare-package</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${target.jdk}</source>
-                    <target>${target.jdk}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <!-- Disable annotation processors during normal compilation -->
-                    <proc>none</proc>
-                </configuration>
-            </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${target.jdk}</source>
+                        <target>${target.jdk}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <!-- Disable annotation processors during normal compilation -->
+                        <proc>none</proc>
+                    </configuration>
+                </plugin>
 
-            <!-- Run annotation processors on src/main/java sources -->
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>${maven-processor-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.gwtplatform</groupId>
-                        <artifactId>gwtp-processors</artifactId>
-                        <version>${gwtp.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+                <!-- Run annotation processors on src/main/java sources -->
+                <plugin>
+                    <groupId>org.bsc.maven</groupId>
+                    <artifactId>maven-processor-plugin</artifactId>
+                    <version>${maven-processor-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>process</id>
+                            <goals>
+                                <goal>process</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.gwtplatform</groupId>
+                            <artifactId>gwtp-processors</artifactId>
+                            <version>${gwtp.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources/apt</source>
-                                <source>${project.build.directory}/generated-sources/gwt</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.7</version>
+                    <executions>
+                        <execution>
+                            <id>add-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>${project.build.directory}/generated-sources/apt</source>
+                                    <source>${project.build.directory}/generated-sources/gwt</source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*TestCase.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/*GwtTest.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                            <include>**/*TestCase.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/*GwtTest.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
