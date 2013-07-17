@@ -92,8 +92,8 @@
     </scm>
 
     <modules>
-        <module>arcbees-facebook</module>
-        <module>arcbees-testutils</module>
+        <module>facebook</module>
+        <module>testutils</module>
         <module>guicy-resteasy</module>
     </modules>
 

@@ -1,7 +1,6 @@
 package com.arcbees.guicyresteasy;
 
 import java.lang.reflect.Type;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,8 +21,6 @@ import com.google.inject.Injector;
 
 @Singleton
 public class GuiceRestEasyFilterDispatcher extends FilterDispatcher {
-    private static final Logger logger = Logger.getLogger(GuiceRestEasyFilterDispatcher.class.getName());
-
     @Inject
     Injector injector;
 
@@ -42,12 +39,10 @@ public class GuiceRestEasyFilterDispatcher extends FilterDispatcher {
                 final Class<?> beanClass = (Class) type;
                 if (GetRestful.isRootResource(beanClass)) {
                     final ResourceFactory resourceFactory = new GuiceResourceFactory(binding.getProvider(), beanClass);
-                    logger.info("Registering factory for" + beanClass.getName());
                     registry.addResourceFactory(resourceFactory);
                 }
 
                 if (beanClass.isAnnotationPresent(Provider.class)) {
-                    logger.info("registering provider instance for" + beanClass.getName());
                     providerFactory.registerProviderInstance(binding.getProvider().get());
                 }
             }
