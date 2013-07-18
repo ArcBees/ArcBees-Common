@@ -34,11 +34,11 @@ public class GuiceRestEasyFilterDispatcher extends FilterDispatcher {
                 (ResteasyProviderFactory.class.getName());
 
         for (final Binding<?> binding : injector.getBindings().values()) {
-            final Type type = binding.getKey().getTypeLiteral().getType();
+            Type type = binding.getKey().getTypeLiteral().getType();
             if (type instanceof Class) {
-                final Class<?> beanClass = (Class) type;
+                Class<?> beanClass = (Class) type;
                 if (GetRestful.isRootResource(beanClass)) {
-                    final ResourceFactory resourceFactory = new GuiceResourceFactory(binding.getProvider(), beanClass);
+                ResourceFactory resourceFactory = new GuiceResourceFactory(binding.getProvider(), beanClass);
                     registry.addResourceFactory(resourceFactory);
                 }
 
