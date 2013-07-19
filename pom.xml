@@ -86,9 +86,9 @@
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:ArcBees/ArcBees-Infrastructure.git</connection>
-        <developerConnection>scm:git:git@github.com:ArcBees/ArcBees-Infrastructure.git</developerConnection>
-        <url>git@github.com:ArcBees/ArcBees-Infrastructure.git</url>
+        <connection>scm:git:git@github.com:ArcBees/ArcBees-Common.git</connection>
+        <developerConnection>scm:git:git@github.com:ArcBees/ArcBees-Common.git</developerConnection>
+        <url>git@github.com:ArcBees/ArcBees-Common.git</url>
     </scm>
 
     <modules>
