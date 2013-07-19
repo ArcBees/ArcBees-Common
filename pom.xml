@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arcbees</groupId>
     <artifactId>arcbees</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>ArcBees</name>
     <inceptionYear>2011</inceptionYear>
@@ -97,6 +96,20 @@
         <module>guicy-resteasy</module>
     </modules>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <distributionManagement>
         <!-- use the following if you ARE using a snapshot version. -->
         <snapshotRepository>
@@ -104,5 +117,10 @@
             <name>Sonatype snapshot repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-releases</id>
+            <name>Sonatype releases repository</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
     </distributionManagement>
 </project>
