@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.arcbees</groupId>
         <artifactId>arcbees</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <groupId>com.arcbees.facebook</groupId>
     <artifactId>facebook</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <properties>
