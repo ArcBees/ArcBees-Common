@@ -129,6 +129,7 @@
                 <configuration>
                     <pushChanges>false</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
+                    <remoteTagging>false</remoteTagging>
                 </configuration>
             </plugin>
         </plugins>
