@@ -3,6 +3,7 @@ package com.arcbees.bitbucket.api.impl;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -26,14 +27,16 @@ import com.arcbees.bitbucket.model.Branch;
 import com.arcbees.bitbucket.model.PullRequest;
 import com.arcbees.bitbucket.model.PullRequestTarget;
 import com.arcbees.bitbucket.model.PullRequests;
+import com.arcbees.bitbucket.util.GsonDateTypeAdapter;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class BitbucketApiImpl implements BitbucketApi {
     private final HttpClientWrapper httpClient;
-    private final Gson gson = new Gson();
+    private final Gson gson;
     private final BitbucketApiPaths apiPaths;
     private final UsernamePasswordCredentials credentials;
 
@@ -44,6 +47,7 @@ public class BitbucketApiImpl implements BitbucketApi {
         this.httpClient = httpClient;
         this.apiPaths = apiPaths;
         this.credentials = new UsernamePasswordCredentials(userName, password);
+        this.gson = new GsonBuilder().registerTypeAdapter(Date.class, new GsonDateTypeAdapter()).create();
     }
 
     @Override
