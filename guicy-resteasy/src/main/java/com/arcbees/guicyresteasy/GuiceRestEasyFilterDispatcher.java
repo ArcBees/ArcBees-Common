@@ -5,7 +5,6 @@ import java.lang.reflect.Type;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.ws.rs.ext.Provider;
 
@@ -28,17 +27,15 @@ public class GuiceRestEasyFilterDispatcher extends FilterDispatcher {
     public void init(FilterConfig servletConfig) throws ServletException {
         super.init(servletConfig);
 
-        ServletContext context = servletConfig.getServletContext();
-        Registry registry = (Registry) context.getAttribute(Registry.class.getName());
-        ResteasyProviderFactory providerFactory = (ResteasyProviderFactory) context.getAttribute
-                (ResteasyProviderFactory.class.getName());
+        Registry registry = getDispatcher().getRegistry();
+        ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
 
         for (final Binding<?> binding : injector.getBindings().values()) {
             Type type = binding.getKey().getTypeLiteral().getType();
             if (type instanceof Class) {
                 Class<?> beanClass = (Class) type;
                 if (GetRestful.isRootResource(beanClass)) {
-                ResourceFactory resourceFactory = new GuiceResourceFactory(binding.getProvider(), beanClass);
+                    ResourceFactory resourceFactory = new GuiceResourceFactory(binding.getProvider(), beanClass);
                     registry.addResourceFactory(resourceFactory);
                 }
 
