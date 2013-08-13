@@ -4,7 +4,7 @@
 
     <g:HTMLPanel
             addStyleNames="{forkOnGithubRes.forkOnGithub_style.forkOnGithub} {forkOnGithubRes.forkOnGithub_mediascreen.forkOnGithub}">
-            <a href="https://github.com/ArcBees/GWTP" target="_blank">
+            <a href="https://github.com/ArcBees" target="_blank" ui:field="link">
                 <span class="{forkOnGithubRes.forkOnGithub_mediascreen.logo}"/>
                 <span class="{forkOnGithubRes.forkOnGithub_style.img} {forkOnGithubRes.forkOnGithub_mediascreen.img}"/>
             </a>
