@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:with field="forkOnGithubRes" type="com.arcbees.website.assets.client.resource.forkOnGithub2.ForkOnGithubResource"/>
+    <ui:with field="forkOnGithubRes" type="com.arcbees.website.assets.client.forkongithub.ForkOnGithubResource"/>
 
     <g:HTMLPanel
             addStyleNames="{forkOnGithubRes.forkOnGithub_style.forkOnGithub} {forkOnGithubRes.forkOnGithub_mediascreen.forkOnGithub}">
