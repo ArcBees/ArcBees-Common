@@ -1,0 +1,12 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="forkOnGithubRes" type="com.arcbees.website.assets.client.forkongithub.ForkOnGithubResource"/>
+
+    <g:HTMLPanel
+            addStyleNames="{forkOnGithubRes.forkOnGithub_style.forkOnGithub} {forkOnGithubRes.forkOnGithub_mediascreen.forkOnGithub}">
+            <a href="https://github.com/ArcBees" target="_blank" ui:field="link">
+                <span class="{forkOnGithubRes.forkOnGithub_mediascreen.logo}"/>
+                <span class="{forkOnGithubRes.forkOnGithub_style.img} {forkOnGithubRes.forkOnGithub_mediascreen.img}"/>
+            </a>
+    </g:HTMLPanel>
+</ui:UiBinder>

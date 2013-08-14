@@ -1,0 +1,115 @@
+    /*------------------------------------*\
+        $CONTENTS
+    \*------------------------------------*/
+        /**
+         * CONTENTS............You’re reading it!
+         * GITHUB..............ForkMeOnGithub over 1320px
+         */
+
+        /*------------------------------------*\
+            $GITHUB
+        \*------------------------------------*/
+    .forkOnGithub {
+        display: block;
+        overflow: hidden;
+        width: 170px;
+        height: 170px;
+
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 140;
+    }
+
+    .forkOnGithub a {
+        width: 225px;
+        height: 38px;
+
+        position: absolute;
+        top: 45px;
+        right: -45px;
+
+        background: #5C5C5C;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5C5C5C), color-stop(100%, #3f3f3f));
+        background: -webkit-linear-gradient(top,  #5C5C5C 0%, #3f3f3f 100%);
+        background: -moz-linear-gradient(top,  #5C5C5C 0%, #3f3f3f 100%);
+        background: -ms-linear-gradient(top,  #5C5C5C 0%,#3f3f3f 100%);
+        background: -o-linear-gradient(top,  #5C5C5C 0%,#3f3f3f 100%);
+        background: linear-gradient(to bottom,  #5C5C5C 0%,#3f3f3f 100%);
+        filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr='#5C5C5C', endColorstr='#3f3f3f',GradientType=0)");
+
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        transform: rotate(45deg);
+
+        -webkit-box-shadow: inset 0 8px 12px 0 rgba(156, 156, 156, 0.2), inset 0 -3px 16px -1px rgba(88, 88, 88, 0.25), 2px 2px 6px 2px rgba(36, 36, 36, 0.3);
+        -moz-box-shadow: inset 0 8px 12px 0 rgba(156, 156, 156, 0.2), inset 0 -3px 16px -1px rgba(88, 88, 88, 0.25), 2px 2px 6px 2px rgba(36, 36, 36, 0.3);
+        box-shadow: inset 0 8px 12px 0 rgba(156, 156, 156, 0.2), inset 0 -3px 16px -1px rgba(88, 88, 88, 0.25), 2px 2px 6px 2px rgba(36, 36, 36, 0.3);
+    }
+
+    .forkOnGithub a:hover {
+        background: #696969;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #696969), color-stop(100%, #323232));
+        background: -webkit-linear-gradient(top, #696969 0%, #323232 100%);
+        background: -moz-linear-gradient(top, #696969 0%, #323232 100%);
+        background: -ms-linear-gradient(top, #696969 0%, #323232 100%);
+        background: -o-linear-gradient(top, #696969 0%, #323232 100%);
+        background: linear-gradient(to bottom, #696969 0%, #323232 100%);
+        filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr = '#696969', endColorstr = '#323232', GradientType = 0)");
+
+        -webkit-box-shadow: inset 0 8px 18px 0 rgba(156, 156, 156, 0.4), inset 0 -3px 22px -1px rgba(88, 88, 88, 0.35), 2px 2px 6px 2px rgba(36, 36, 36, 0.3);
+        -moz-box-shadow: inset 0 8px 18px 0 rgba(156, 156, 156, 0.4), inset 0 -3px 22px -1px rgba(88, 88, 88, 0.35), 2px 2px 6px 2px rgba(36, 36, 36, 0.3);
+        box-shadow: inset 0 8px 18px 0 rgba(156, 156, 156, 0.4), inset 0 -3px 22px -1px rgba(88, 88, 88, 0.35), 2px 2px 6px 2px rgba(36, 36, 36, 0.3);
+    }
+
+    .forkOnGithub a:active {
+        background: #4d4d4d;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4d4d4d), color-stop(100%, #222222));
+        background: -webkit-linear-gradient(top, #4d4d4d 0%, #222222 100%);
+        background: -moz-linear-gradient(top, #4d4d4d 0%, #222222 100%);
+        background: -ms-linear-gradient(top, #4d4d4d 0%, #222222 100%);
+        background: -o-linear-gradient(top, #4d4d4d 0%, #222222 100%);
+        background: linear-gradient(to bottom, #4d4d4d 0%, #222222 100%);
+        filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr = '#4d4d4d', endColorstr = '#222222', GradientType = 0)");
+
+        -webkit-box-shadow: inset 0 10px 12px 0 rgba(12, 12, 12, 0.5), inset 0 -3px 16px -3px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: inset 0 10px 12px 0 rgba(12, 12, 12, 0.5), inset 0 -3px 16px -3px rgba(0, 0, 0, 0.7);
+        box-shadow: inset 0 10px 12px 0 rgba(12, 12, 12, 0.5), inset 0 -3px 16px -3px rgba(0, 0, 0, 0.7);
+    }
+
+    @sprite .forkOnGithub a::before, .forkOnGithub a::after {
+        gwt-image: "githubDashedLine";
+        content: "";
+
+        display: block;
+        width: 100%;
+        height: 1px;
+
+        position: absolute;
+        top: 1px;
+        left: 0;
+    }
+
+    .forkOnGithub a::after {
+        top: auto;
+        bottom: 1px;
+    }
+
+    @sprite .forkOnGithub a span.img {
+        gwt-image: "githubForkMe";
+        background-position: center center;
+
+        position: absolute;
+        z-index: 20;
+    }
+
+    .forkOnGithub a span, .forkOnGithub a span.img {
+        display: block;
+        width: 160px;
+        height: 38px;
+        margin-left: 35px;
+
+        position: absolute;
+        z-index: 10;
+        top: 0;
+    }

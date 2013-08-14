@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <inherits name='com.google.gwt.inject.Inject'/>
+    <inherits name='com.google.gwt.query.Query'/>
+
+    <source path="client"/>
+
+    <extend-configuration-property name="gin.ginjector.modules"
+                                   value="com.arcbees.website.assets.client.gin.ClientModule"/>
+</module>
