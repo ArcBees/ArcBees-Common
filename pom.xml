@@ -99,7 +99,7 @@
         <module>facebook</module>
         <module>testutils</module>
         <module>guicy-resteasy</module>
-        <module>websiteassets</module>
+        <module>website-assets</module>
     </modules>
 
     <properties>
