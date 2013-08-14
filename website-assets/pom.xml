@@ -9,7 +9,7 @@
         <version>1.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>websiteassets</artifactId>
+    <artifactId>website-assets</artifactId>
 
     <properties>
         <gwt.version>2.5.1</gwt.version>
