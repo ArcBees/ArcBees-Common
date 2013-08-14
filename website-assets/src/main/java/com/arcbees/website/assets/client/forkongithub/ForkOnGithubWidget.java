@@ -1,4 +1,4 @@
-package com.arcbees.website.assets.client.application.forkOnGithub;
+package com.arcbees.website.assets.client.forkongithub;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;

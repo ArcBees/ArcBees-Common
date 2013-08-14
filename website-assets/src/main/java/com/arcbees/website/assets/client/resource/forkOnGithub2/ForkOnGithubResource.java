@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.website.assets.client.resource.forkOnGithub;
+package com.arcbees.website.assets.client.resource.forkOnGithub2;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;

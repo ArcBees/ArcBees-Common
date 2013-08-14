@@ -14,11 +14,11 @@
  * the License.
  */
 
-package com.arcbees.website.assets.client.gin;
+package com.arcbees.website.assets.client.forkongithub;
 
 import javax.inject.Inject;
 
-import com.arcbees.website.assets.client.resource.forkOnGithub.ForkOnGithubResource;
+import com.arcbees.website.assets.client.resource.forkOnGithub2.ForkOnGithubResource;
 import com.google.gwt.dom.client.StyleInjector;
 
 public class ForkOnGithubResourcesLoader {
