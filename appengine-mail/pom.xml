@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arcbees</groupId>
+        <artifactId>arcbees</artifactId>
+        <version>1.2-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.arcbees.appengine</groupId>
+    <artifactId>mail</artifactId>
+    <version>1.1-SNAPSHOT</version>
+
+    <properties>
+        <gae.version>1.7.4</gae.version>
+        <junit.version>4.11</junit.version>
+        <mockito-all.version>1.9.5</mockito-all.version>
+        <guice.version>3.0</guice.version>
+        <guava.version>14.0.1</guava.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${gae.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito-all.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+    </dependencies>
+</project>
