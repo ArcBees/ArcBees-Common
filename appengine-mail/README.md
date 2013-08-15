@@ -1,8 +1,5 @@
 appengine-mail
 ==============
-
-[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/90af60e86e56006cb47853038b538f4c "githalytics.com")](http://githalytics.com/ArcBees/appengine-mail)
-
 A simple App Engine Mail service interface.
 
 A task to send your email will be pushed into App Engine's default queue.
@@ -46,6 +43,9 @@ Inject and use:
 emailSender.send(email);
 ```
 
+##Maven Configuration
+[Link to Maven Central](http://search.maven.org/#artifactdetails%7Ccom.arcbees.appengine%7Cmail%7C1.0%7Cjar)
+
 ##Releases##
 ```
 <dependency>
@@ -63,3 +63,6 @@ emailSender.send(email);
     <version>1.1-SNAPSHOT</version>
 </dependency>
 ```
+
+[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/90af60e86e56006cb47853038b538f4c "githalytics.com")](http://githalytics.com/ArcBees/appengine-mail)
+
