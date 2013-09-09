@@ -21,7 +21,9 @@ import java.io.Serializable;
 public interface Email extends Serializable {
     String getTo();
 
-    String getFrom();
+    String getFromAddress();
+
+    String getFromPersonal();
 
     String getSubject();
 

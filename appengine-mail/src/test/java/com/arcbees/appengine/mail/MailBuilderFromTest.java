@@ -24,15 +24,16 @@ public class MailBuilderFromTest {
     @Test
     public void build_allFieldsFilled_emailIsWellBuilt() {
         //given
-        EmailBuilder.MailBuilderFrom mailBuilderFrom = EmailBuilder.to("to").from("from").body("body").subject
-                ("subject");
+        EmailBuilder.MailBuilderFromAddress mailBuilderFromAddress = EmailBuilder.to("to").fromAddress("fromAddress").fromPersonal
+                ("fromPersonal").body("body").subject("subject");
 
         //when
-        Email email = mailBuilderFrom.build();
+        Email email = mailBuilderFromAddress.build();
 
         //then
         assertEquals("to", email.getTo());
-        assertEquals("from", email.getFrom());
+        assertEquals("fromAddress", email.getFromAddress());
+        assertEquals("fromPersonal", email.getFromPersonal());
         assertEquals("body", email.getBody());
         assertEquals("subject", email.getSubject());
     }
@@ -40,14 +41,16 @@ public class MailBuilderFromTest {
     @Test
     public void build_missingBody_emailIsWellBuilt() {
         //given
-        EmailBuilder.MailBuilderFrom mailBuilderFrom = EmailBuilder.to("to").from("from").subject("subject");
+        EmailBuilder.MailBuilderFromAddress mailBuilderFromAddress = EmailBuilder.to("to").fromAddress("fromAddress").fromPersonal
+                ("fromPersonal").subject("subject");
 
         //when
-        Email email = mailBuilderFrom.build();
+        Email email = mailBuilderFromAddress.build();
 
         //then
         assertEquals("to", email.getTo());
-        assertEquals("from", email.getFrom());
+        assertEquals("fromAddress", email.getFromAddress());
+        assertEquals("fromPersonal", email.getFromPersonal());
         assertEquals("", email.getBody());
         assertEquals("subject", email.getSubject());
     }
@@ -55,15 +58,34 @@ public class MailBuilderFromTest {
     @Test
     public void build_missingSubject_emailIsWellBuilt() {
         //given
-        EmailBuilder.MailBuilderFrom mailBuilderFrom = EmailBuilder.to("to").from("from").body("body");
+        EmailBuilder.MailBuilderFromAddress mailBuilderFromAddress = EmailBuilder.to("to").fromAddress("fromAddress").fromPersonal
+                ("fromPersonal").body("body");
 
         //when
-        Email email = mailBuilderFrom.build();
+        Email email = mailBuilderFromAddress.build();
 
         //then
         assertEquals("to", email.getTo());
-        assertEquals("from", email.getFrom());
+        assertEquals("fromAddress", email.getFromAddress());
+        assertEquals("fromPersonal", email.getFromPersonal());
         assertEquals("body", email.getBody());
         assertEquals("", email.getSubject());
+    }
+
+    @Test
+    public void build_missingPersonal_emailIsWellBuilt() {
+        //given
+        EmailBuilder.MailBuilderFromAddress mailBuilderFromAddress = EmailBuilder.to("to").fromAddress("fromAddress").body
+                ("body").subject("subject");
+
+        //when
+        Email email = mailBuilderFromAddress.build();
+
+        //then
+        assertEquals("to", email.getTo());
+        assertEquals("fromAddress", email.getFromAddress());
+        assertEquals(EmailBuilder.DEFAULT_PERSONAL, email.getFromPersonal());
+        assertEquals("body", email.getBody());
+        assertEquals("subject", email.getSubject());
     }
 }

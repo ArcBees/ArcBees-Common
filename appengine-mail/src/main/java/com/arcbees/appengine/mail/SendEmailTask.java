@@ -16,6 +16,7 @@
 
 package com.arcbees.appengine.mail;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,13 +49,19 @@ public class SendEmailTask implements DeferredTask {
         Message message = new MimeMessage(session);
 
         try {
-            message.setFrom(new InternetAddress(email.getFrom()));
+            if (email.getFromPersonal().equals(EmailBuilder.DEFAULT_PERSONAL)) {
+                message.setFrom(new InternetAddress(email.getFromAddress()));
+            } else {
+                message.setFrom(new InternetAddress(email.getFromAddress(), email.getFromPersonal()));
+            }
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
             message.setSubject(email.getSubject());
             message.setContent(email.getBody(), CONTENT_TYPE);
 
             transport.send(message);
         } catch (MessagingException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } catch (UnsupportedEncodingException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
