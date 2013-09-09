@@ -24,52 +24,64 @@ public class EmailBuilder {
             this.to = to;
         }
 
-        public MailBuilderFrom from(String from) {
-            return new MailBuilderFrom(from, this);
+        public MailBuilderFromAddress fromAddress(String from) {
+            return new MailBuilderFromAddress(from, this);
         }
     }
 
-    public static class MailBuilderFrom {
-        private final String from;
+    public static final String DEFAULT_PERSONAL = "";
+
+    public static class MailBuilderFromAddress {
+        private final String fromAddress;
         private final MailBuilderTo mailBuilderTo;
         private String subject;
         private String body;
+        private String fromPersonal;
 
-        private MailBuilderFrom(String from,
-                                MailBuilderTo mailBuilderTo) {
+        private MailBuilderFromAddress(String fromAddress,
+                                       MailBuilderTo mailBuilderTo) {
             this.body = "";
             this.subject = "";
-            this.from = from;
+            this.fromAddress = fromAddress;
+            this.fromPersonal = DEFAULT_PERSONAL;
             this.mailBuilderTo = mailBuilderTo;
         }
 
-        public MailBuilderFrom subject(String subject) {
+        public MailBuilderFromAddress subject(String subject) {
             this.subject = subject;
 
             return this;
         }
 
-        public MailBuilderFrom body(String body) {
+        public MailBuilderFromAddress body(String body) {
             this.body = body;
 
             return this;
         }
 
+        public MailBuilderFromAddress fromPersonal(String fromPersonal) {
+            this.fromPersonal = fromPersonal;
+
+            return this;
+        }
+
         public Email build() {
-            return new EmailImpl(mailBuilderTo.to, from, subject, body);
+            return new EmailImpl(mailBuilderTo.to, fromAddress, fromPersonal, subject, body);
         }
     }
 
     private static class EmailImpl implements Email {
         private final String subject;
         private final String to;
-        private final String from;
+        private final String fromAddress;
+        private final String fromPersonal;
         private final String body;
 
-        private EmailImpl(String to, String from, String subject, String body) {
+        private EmailImpl(String to, String fromAddress, String fromPersonal, String subject, String body) {
             this.to = to;
-            this.from = from;
+            this.fromAddress = fromAddress;
             this.subject = subject;
+            this.fromPersonal = fromPersonal;
             this.body = body;
         }
 
@@ -79,8 +91,13 @@ public class EmailBuilder {
         }
 
         @Override
-        public String getFrom() {
-            return from;
+        public String getFromAddress() {
+            return fromAddress;
+        }
+
+        @Override
+        public String getFromPersonal() {
+            return fromPersonal;
         }
 
         @Override

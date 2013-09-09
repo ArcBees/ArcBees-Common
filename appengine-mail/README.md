@@ -7,7 +7,7 @@ A task to send your email will be pushed into App Engine's default queue.
 ##Creating an Email##
 First, create an `Email` like this:
 ```java
-Email email = EmailBuilder.to("batman@gotham.net").from("joker@gotham.net")
+Email email = EmailBuilder.to("batman@gotham.net").fromAddress("joker@gotham.net").fromPersonal("The Joker")
                   .subject("Why so serious?").body("Let's put a smile on that face!").build();
 
 ```

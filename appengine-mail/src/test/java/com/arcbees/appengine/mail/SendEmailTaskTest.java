@@ -15,7 +15,8 @@ public class SendEmailTaskTest {
     public void run_mockedTransport_transportSendAnyMessage() throws MessagingException {
         //given
         Email email = mock(Email.class);
-        when(email.getFrom()).thenReturn("a@a.com");
+        when(email.getFromAddress()).thenReturn("a@a.com");
+        when(email.getFromPersonal()).thenReturn("A Personal");
         when(email.getTo()).thenReturn("b@b.com");
         Transport transport = mock(Transport.class);
         SendEmailTask sendEmailTask = new SendEmailTask(email, transport);
