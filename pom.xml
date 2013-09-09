@@ -96,6 +96,7 @@
     </scm>
 
     <modules>
+        <module>appengine-mail</module>
         <module>facebook</module>
         <module>testutils</module>
         <module>guicy-resteasy</module>
