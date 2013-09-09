@@ -29,6 +29,8 @@ public class EmailBuilder {
         }
     }
 
+    public static final String DEFAULT_PERSONAL = "";
+
     public static class MailBuilderFromAddress {
         private final String fromAddress;
         private final MailBuilderTo mailBuilderTo;
@@ -41,7 +43,7 @@ public class EmailBuilder {
             this.body = "";
             this.subject = "";
             this.fromAddress = fromAddress;
-            this.fromPersonal = fromAddress;
+            this.fromPersonal = DEFAULT_PERSONAL;
             this.mailBuilderTo = mailBuilderTo;
         }
 

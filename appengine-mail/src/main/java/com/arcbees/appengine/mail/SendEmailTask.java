@@ -49,7 +49,11 @@ public class SendEmailTask implements DeferredTask {
         Message message = new MimeMessage(session);
 
         try {
-            message.setFrom(new InternetAddress(email.getFromAddress(), email.getFromPersonal()));
+            if (email.getFromPersonal().equals(EmailBuilder.DEFAULT_PERSONAL)) {
+                message.setFrom(new InternetAddress(email.getFromAddress()));
+            } else {
+                message.setFrom(new InternetAddress(email.getFromAddress(), email.getFromPersonal()));
+            }
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
             message.setSubject(email.getSubject());
             message.setContent(email.getBody(), CONTENT_TYPE);

@@ -84,7 +84,7 @@ public class MailBuilderFromTest {
         //then
         assertEquals("to", email.getTo());
         assertEquals("fromAddress", email.getFromAddress());
-        assertEquals("fromAddress", email.getFromPersonal());
+        assertEquals(EmailBuilder.DEFAULT_PERSONAL, email.getFromPersonal());
         assertEquals("body", email.getBody());
         assertEquals("subject", email.getSubject());
     }
