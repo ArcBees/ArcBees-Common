@@ -28,7 +28,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.test.annotation.FindByDebugId;
 import com.arcbees.test.annotation.LongImplicitWait;
-import com.google.gwt.user.client.ui.UIObject;
 
 public class ElementLocator implements org.openqa.selenium.support.pagefactory.ElementLocator {
     private final WebDriver webDriver;
