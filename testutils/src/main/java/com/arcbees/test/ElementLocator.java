@@ -108,7 +108,8 @@ public class ElementLocator implements org.openqa.selenium.support.pagefactory.E
     private void processFindBy(Field field, Annotations annotations) {
         FindByDebugId findByDebugId = field.getAnnotation(FindByDebugId.class);
         if (findByDebugId != null) {
-            by = By.id(UIObject.DEBUG_ID_PREFIX + findByDebugId.value());
+            String id = findByDebugId.value();
+            by = new ByDebugId(id);
         } else {
             by = annotations.buildBy();
         }
