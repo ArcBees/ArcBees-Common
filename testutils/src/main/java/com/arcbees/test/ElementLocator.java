@@ -28,7 +28,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.test.annotation.FindByDebugId;
 import com.arcbees.test.annotation.LongImplicitWait;
-import com.google.gwt.user.client.ui.UIObject;
 
 public class ElementLocator implements org.openqa.selenium.support.pagefactory.ElementLocator {
     private final WebDriver webDriver;
@@ -108,7 +107,8 @@ public class ElementLocator implements org.openqa.selenium.support.pagefactory.E
     private void processFindBy(Field field, Annotations annotations) {
         FindByDebugId findByDebugId = field.getAnnotation(FindByDebugId.class);
         if (findByDebugId != null) {
-            by = By.id(UIObject.DEBUG_ID_PREFIX + findByDebugId.value());
+            String id = findByDebugId.value();
+            by = new ByDebugId(id);
         } else {
             by = annotations.buildBy();
         }
