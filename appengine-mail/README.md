@@ -51,7 +51,7 @@ emailSender.send(email);
 <dependency>
     <groupId>com.arcbees.appengine</groupId>
     <artifactId>mail</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
 </dependency>
 ```
 
@@ -60,7 +60,7 @@ emailSender.send(email);
 <dependency>
     <groupId>com.arcbees.appengine</groupId>
     <artifactId>mail</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
 </dependency>
 ```
 
