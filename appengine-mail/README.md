@@ -44,7 +44,7 @@ emailSender.send(email);
 ```
 
 ##Maven Configuration
-[Link to Maven Central](http://search.maven.org/#artifactdetails%7Ccom.arcbees.appengine%7Cmail%7C1.0%7Cjar)
+[Link to Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.arcbees.appengine%22%20AND%20a%3A%22mail%22)
 
 ##Releases##
 ```
@@ -63,6 +63,3 @@ emailSender.send(email);
     <version>1.3-SNAPSHOT</version>
 </dependency>
 ```
-
-[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/90af60e86e56006cb47853038b538f4c "githalytics.com")](http://githalytics.com/ArcBees/appengine-mail)
-
