@@ -39,12 +39,12 @@ public class GuiceRestEasyFilterDispatcher extends FilterDispatcher {
             Type type = binding.getKey().getTypeLiteral().getType();
             if (type instanceof Class) {
                 Class<?> beanClass = (Class) type;
-                if (beanClass.isAnnotationPresent(Provider.class)) {
-                    providerFactory.registerProviderInstance(binding.getProvider().get());
-                }
-
                 if (GetRestful.isRootResource(beanClass)) {
                     delayedBinds.put(binding.getProvider(), beanClass);
+                }
+
+                if (beanClass.isAnnotationPresent(Provider.class)) {
+                    providerFactory.registerProviderInstance(binding.getProvider().get());
                 }
             }
         }
