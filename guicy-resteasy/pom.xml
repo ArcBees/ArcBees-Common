@@ -11,7 +11,7 @@
 
     <properties>
         <javax-servlet.version>2.5</javax-servlet.version>
-        <resteasy.version>2.3.5.Final</resteasy.version>
+        <resteasy.version>3.0.10.Final</resteasy.version>
         <guice.version>3.0</guice.version>
     </properties>
 

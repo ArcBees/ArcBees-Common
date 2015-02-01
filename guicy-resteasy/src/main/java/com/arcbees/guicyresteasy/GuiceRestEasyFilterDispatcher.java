@@ -1,6 +1,8 @@
 package com.arcbees.guicyresteasy;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,19 +32,26 @@ public class GuiceRestEasyFilterDispatcher extends FilterDispatcher {
         Registry registry = getDispatcher().getRegistry();
         ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
 
+        Map<com.google.inject.Provider<?>, Class<?>> delayedBinds =
+                new HashMap<com.google.inject.Provider<?>, Class<?>>();
+
         for (final Binding<?> binding : injector.getBindings().values()) {
             Type type = binding.getKey().getTypeLiteral().getType();
             if (type instanceof Class) {
                 Class<?> beanClass = (Class) type;
-                if (GetRestful.isRootResource(beanClass)) {
-                    ResourceFactory resourceFactory = new GuiceResourceFactory(binding.getProvider(), beanClass);
-                    registry.addResourceFactory(resourceFactory);
-                }
-
                 if (beanClass.isAnnotationPresent(Provider.class)) {
                     providerFactory.registerProviderInstance(binding.getProvider().get());
                 }
+
+                if (GetRestful.isRootResource(beanClass)) {
+                    delayedBinds.put(binding.getProvider(), beanClass);
+                }
             }
+        }
+
+        for (Map.Entry<com.google.inject.Provider<?>, Class<?>> entry : delayedBinds.entrySet()) {
+            ResourceFactory resourceFactory = new GuiceResourceFactory(entry.getKey(), entry.getValue());
+            registry.addResourceFactory(resourceFactory);
         }
     }
 }
