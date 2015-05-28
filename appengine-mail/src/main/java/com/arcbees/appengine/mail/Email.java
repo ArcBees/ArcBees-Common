@@ -28,4 +28,6 @@ public interface Email extends Serializable {
     String getSubject();
 
     String getBody();
+
+    String getReplyToAddress();
 }

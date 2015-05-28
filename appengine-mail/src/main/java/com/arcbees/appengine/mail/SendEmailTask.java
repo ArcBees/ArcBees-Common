@@ -21,6 +21,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -57,6 +58,9 @@ public class SendEmailTask implements DeferredTask {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
             message.setSubject(email.getSubject());
             message.setContent(email.getBody(), CONTENT_TYPE);
+            message.setReplyTo(new Address[] {
+                    new InternetAddress(email.getReplyToAddress())
+            });
 
             transport.send(message);
         } catch (MessagingException e) {

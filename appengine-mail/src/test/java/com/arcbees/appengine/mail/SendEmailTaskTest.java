@@ -18,6 +18,7 @@ public class SendEmailTaskTest {
         when(email.getFromAddress()).thenReturn("a@a.com");
         when(email.getFromPersonal()).thenReturn("A Personal");
         when(email.getTo()).thenReturn("b@b.com");
+        when(email.getReplyToAddress()).thenReturn("c@c.com");
         Transport transport = mock(Transport.class);
         SendEmailTask sendEmailTask = new SendEmailTask(email, transport);
 
