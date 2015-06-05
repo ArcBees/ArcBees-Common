@@ -29,6 +29,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.google.appengine.api.taskqueue.DeferredTask;
+import com.google.appengine.repackaged.com.google.common.base.Strings;
 
 public class SendEmailTask implements DeferredTask {
     private static final String CONTENT_TYPE = "text/html";
@@ -58,9 +59,12 @@ public class SendEmailTask implements DeferredTask {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
             message.setSubject(email.getSubject());
             message.setContent(email.getBody(), CONTENT_TYPE);
-            message.setReplyTo(new Address[] {
-                    new InternetAddress(email.getReplyToAddress())
-            });
+
+            if (Strings.isNullOrEmpty(email.getReplyToAddress())) {
+                message.setReplyTo(new Address[] {
+                        new InternetAddress(email.getReplyToAddress())
+                });
+            }
 
             transport.send(message);
         } catch (MessagingException e) {

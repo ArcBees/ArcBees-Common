@@ -75,7 +75,7 @@ public class EmailBuilder {
         }
 
         public Email build() {
-            return new EmailImpl(mailBuilderTo.to, fromAddress, fromPersonal, subject, body, replyToAddress);
+            return new EmailImpl(this);
         }
     }
 
@@ -87,14 +87,13 @@ public class EmailBuilder {
         private final String body;
         private final String replyToAddress;
 
-        private EmailImpl(String to, String fromAddress, String fromPersonal, String subject, String body,
-                          String replyToAddress) {
-            this.to = to;
-            this.fromAddress = fromAddress;
-            this.subject = subject;
-            this.fromPersonal = fromPersonal;
-            this.body = body;
-            this.replyToAddress = replyToAddress;
+        private EmailImpl(MailBuilderFromAddress builder) {
+            this.to = builder.mailBuilderTo.to;
+            this.fromAddress = builder.fromAddress;
+            this.subject = builder.subject;
+            this.fromPersonal = builder.fromPersonal;
+            this.body = builder.body;
+            this.replyToAddress = builder.replyToAddress;
         }
 
         @Override
