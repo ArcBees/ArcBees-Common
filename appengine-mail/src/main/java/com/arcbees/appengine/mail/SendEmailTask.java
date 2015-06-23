@@ -29,7 +29,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.google.appengine.api.taskqueue.DeferredTask;
-import com.google.appengine.repackaged.com.google.common.base.Strings;
+import com.google.common.base.Strings;
 
 public class SendEmailTask implements DeferredTask {
     private static final String CONTENT_TYPE = "text/html";
