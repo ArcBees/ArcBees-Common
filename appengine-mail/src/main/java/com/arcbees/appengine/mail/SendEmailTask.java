@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2013 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -21,6 +21,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -28,6 +29,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.google.appengine.api.taskqueue.DeferredTask;
+import com.google.common.base.Strings;
 
 public class SendEmailTask implements DeferredTask {
     private static final String CONTENT_TYPE = "text/html";
@@ -57,6 +59,12 @@ public class SendEmailTask implements DeferredTask {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
             message.setSubject(email.getSubject());
             message.setContent(email.getBody(), CONTENT_TYPE);
+
+            if (Strings.isNullOrEmpty(email.getReplyToAddress())) {
+                message.setReplyTo(new Address[] {
+                        new InternetAddress(email.getReplyToAddress())
+                });
+            }
 
             transport.send(message);
         } catch (MessagingException e) {

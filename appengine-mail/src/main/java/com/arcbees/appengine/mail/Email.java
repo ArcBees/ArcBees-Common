@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2013 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -28,4 +28,6 @@ public interface Email extends Serializable {
     String getSubject();
 
     String getBody();
+
+    String getReplyToAddress();
 }

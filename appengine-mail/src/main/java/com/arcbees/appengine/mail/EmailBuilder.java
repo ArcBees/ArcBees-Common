@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2013 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -34,6 +34,8 @@ public class EmailBuilder {
     public static class MailBuilderFromAddress {
         private final String fromAddress;
         private final MailBuilderTo mailBuilderTo;
+
+        private String replyToAddress;
         private String subject;
         private String body;
         private String fromPersonal;
@@ -44,6 +46,7 @@ public class EmailBuilder {
             this.subject = "";
             this.fromAddress = fromAddress;
             this.fromPersonal = DEFAULT_PERSONAL;
+            this.replyToAddress = "";
             this.mailBuilderTo = mailBuilderTo;
         }
 
@@ -65,8 +68,14 @@ public class EmailBuilder {
             return this;
         }
 
+        public MailBuilderFromAddress replyToAddress(String replyToAddress) {
+            this.replyToAddress = replyToAddress;
+
+            return this;
+        }
+
         public Email build() {
-            return new EmailImpl(mailBuilderTo.to, fromAddress, fromPersonal, subject, body);
+            return new EmailImpl(this);
         }
     }
 
@@ -76,13 +85,15 @@ public class EmailBuilder {
         private final String fromAddress;
         private final String fromPersonal;
         private final String body;
+        private final String replyToAddress;
 
-        private EmailImpl(String to, String fromAddress, String fromPersonal, String subject, String body) {
-            this.to = to;
-            this.fromAddress = fromAddress;
-            this.subject = subject;
-            this.fromPersonal = fromPersonal;
-            this.body = body;
+        private EmailImpl(MailBuilderFromAddress builder) {
+            this.to = builder.mailBuilderTo.to;
+            this.fromAddress = builder.fromAddress;
+            this.subject = builder.subject;
+            this.fromPersonal = builder.fromPersonal;
+            this.body = builder.body;
+            this.replyToAddress = builder.replyToAddress;
         }
 
         @Override
@@ -108,6 +119,11 @@ public class EmailBuilder {
         @Override
         public String getBody() {
             return body;
+        }
+
+        @Override
+        public String getReplyToAddress() {
+            return replyToAddress;
         }
     }
 
