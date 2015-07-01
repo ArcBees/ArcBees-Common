@@ -18,19 +18,39 @@ package com.arcbees.facebook.client;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.MetaElement;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.ScriptElement;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 
 public class JavaScriptFacebook extends AbstractFacebook {
     private static final String FB_ROOT = "fb-root";
-    private static final String FB_SCRIPT_SRC = Window.Location.getProtocol()
-            + "//connect.facebook.net/en_US/all.js";
+    private static final String FB_SCRIPT_SRC1 = Window.Location.getProtocol()
+            + "//connect.facebook.net/";    
+    private static final String FB_SCRIPT_SRC2 = "/all.js";
     private static final String FB_SCRIPT_TYPE = "text/javascript";
 
     @Override
     public void injectFacebookApi(final FacebookCallback facebookCallback) {
-        Element firstElement = Document.get().getBody().getFirstChildElement();
+        
+    	String locale = "en_US";
+    	
+    	// get the correct locale from meta tag gwt:property facebooklocale
+    	final NodeList<Element> metas = Document.get().getElementsByTagName("meta");
+
+        for (int i = 0; i < metas.getLength(); i++) {
+            final MetaElement m = MetaElement.as(metas.getItem(i));
+
+            if ("gwt:property".equals(m.getName())) {
+            	String content = m.getContent();
+            	if (content.contains("facebooklocale")) {
+            		locale = content.replaceFirst(".*\\=", "").trim();
+            	}
+            }
+        }
+    	
+    	Element firstElement = Document.get().getBody().getFirstChildElement();
 
         Element fbRoot = Document.get().createDivElement();
         fbRoot.setId(FB_ROOT);
@@ -38,7 +58,7 @@ public class JavaScriptFacebook extends AbstractFacebook {
         firstElement.getParentNode().insertBefore(fbRoot, firstElement);
 
         ScriptElement fbScript = Document.get().createScriptElement();
-        fbScript.setSrc(FB_SCRIPT_SRC);
+        fbScript.setSrc(FB_SCRIPT_SRC1+locale+FB_SCRIPT_SRC2);
         fbScript.setType(FB_SCRIPT_TYPE);
 
         fbRoot.getParentNode().insertAfter(fbScript, fbRoot);
