@@ -101,6 +101,7 @@
         <module>testutils</module>
         <module>guicy-resteasy</module>
         <module>website-assets</module>
+        <module>ui</module>
     </modules>
 
     <properties>
