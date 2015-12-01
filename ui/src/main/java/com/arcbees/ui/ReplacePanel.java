@@ -64,6 +64,10 @@ public class ReplacePanel implements IsWidget, HasOneWidget, HasVisibility {
 
         HTMLPanel parent = (HTMLPanel) parentAsWidget;
 
+        if (widgetToAttach == null) {
+            widgetToAttach = new SimplePanel();
+        }
+
         parent.addAndReplaceElement(widgetToAttach, (Element) widget.asWidget().getElement());
 
         widget = widgetToAttach;
