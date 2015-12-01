@@ -79,6 +79,10 @@ public class ReplacePanel implements IsWidget, HasOneWidget, HasVisibility {
 
     @Override
     public void setWidget(IsWidget widget) {
+        if (widget == null) {
+            widget = new SimplePanel();
+        }
+
         setWidget(widget.asWidget());
     }
 
